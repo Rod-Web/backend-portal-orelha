@@ -1,0 +1,28 @@
+{
+  "name": "backend-portal-orelha",
+  "version": "1.0.0",
+  "description": "Repositório para o backend do TCC do curso Informática para Internet.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon ./server.js",
+    "start": "node ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rod-Web/backend-portal-orelha.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rod-Web/backend-portal-orelha/issues"
+  },
+  "homepage": "https://github.com/Rod-Web/backend-portal-orelha#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
