@@ -2,11 +2,11 @@
   "name": "backend-portal-orelha",
   "version": "1.0.0",
   "description": "Repositório para o backend do TCC do curso Informática para Internet.",
-  "main": "index.js",
+  "main": "/src/server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./server.js",
-    "start": "node ./server.js"
+    "dev": "nodemon ./src/server.js",
+    "start": "node ./src/server.js"
   },
   "repository": {
     "type": "git",

@@ -4,10 +4,13 @@ import express from 'express';
 import {dadosUsuario} from '../middlwares/validacoes/dadosUsuario.js'
 import {dadosCliente} from '../middlwares/validacoes/dadosCliente.js'
 
+//Controller
+import { controllerInserirCliente } from '../controller/cliente.js';
+
 
 export const route_cliente = express.Router();
 
-route_cliente.post('/inserirCliente', dadosUsuario, dadosCliente, controllerCliente);
+route_cliente.post('/inserirCliente', dadosUsuario, dadosCliente, controllerInserirCliente);
 
 /*
 Usuário informa dados para cadastro
