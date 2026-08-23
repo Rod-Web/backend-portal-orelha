@@ -2,6 +2,7 @@ import { validarCPF } from "./dados/cpf.js";
 import { validarNome } from "./dados/nome.js"
 import { validarIdade} from "./dados/idade.js"
 import { validarSenha } from "./dados/senha.js";
+import { validarTelefone } from "./dados/telefone.js";
 import { validarEmail} from "./dados/email.js"
 
 export function dadosUsuario(req, res, next) {
@@ -19,8 +20,8 @@ export function dadosUsuario(req, res, next) {
         validarNome(dados.nome) ||
         validarIdade(dados.idade) ||
         validarSenha(dados.senha) ||
-        validarEmail(dados.email);
-        // Falta validar telefone
+        validarTelefone(dados.telefone) ||
+        validarEmail(dados.email)
 
     if (erro) return res.status(400).json({ erro });
 
