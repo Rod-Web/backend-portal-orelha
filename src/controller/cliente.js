@@ -1,8 +1,7 @@
-// import {serviceInserirCliente} from '../service/cliente.js'
+import {serviceInserirCliente} from '../service/cliente.js'
 
 export async function controllerInserirCliente(req, res, next) {
     try {
-        console.log("oi")
         const dados = {
             cpf: req.body.cpf,
             nome: req.body.nome,
@@ -16,9 +15,10 @@ export async function controllerInserirCliente(req, res, next) {
             }
         };
 
-        //const user = await serviceInserirCliente(dados);
-
+        const user = await serviceInserirCliente(dados);
+        // TEM QUE VER O QUE VAMOS RETORNAR
         return res.status(201).json({dados})
+        
 
     } catch (error) {
         next(error)

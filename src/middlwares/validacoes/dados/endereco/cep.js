@@ -1,21 +1,21 @@
 export function validarCEP(cep) {
-    // Verifica se o CEP foi informado
-    if (!cep || cep.trim() === "") {
-        return "CEP é obrigatório";
-    }
+  // Verifica se foi informado
+  if (cep === undefined || cep === null || cep === "") {
+    return "CEP é obrigatório";
+  }
 
-    // Verifica se o CEP é um texto
-    if (typeof cep !== "string") {
-        return "CEP deve ser um texto";
-    }
+  // Verifica se é texto
+  if (typeof cep !== "string") {
+    return "CEP deve ser um texto";
+  }
 
-    // Remove espaços, pontos e traços
-    cep = cep.replace(/\D/g, "");
+  // Remove espaços, pontos e traços
+  cep = cep.replace(/\D/g, "");
 
-    // CEP precisa ter exatamente 8 dígitos
-    if (cep.length !== 8) {
-        return "CEP precisa ter exatamente 8 dígitos";
-    }
+  // CEP precisa ter exatamente 8 dígitos
+  if (cep.length !== 8) {
+    return "CEP precisa ter exatamente 8 dígitos";
+  }
 
-    return null;
-};
+  return null;
+}

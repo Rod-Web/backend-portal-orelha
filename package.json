@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/Rod-Web/backend-portal-orelha#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mysql2": "^3.24.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

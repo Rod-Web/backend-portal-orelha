@@ -1,11 +1,16 @@
 export function validarEmail(email) {
-    if (!email) return "Preencha o campo do email.";
+  if (!email) return "Preencha o campo do email.";
 
-    email = email.trim();
+  if (typeof email !== "string") return "O email deve ser uma string.";
 
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regexEmail.test(email)) return "Email com formato inválido.";
+  email = email.trim();
 
-    return null;
-};
+  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!regexEmail.test(email)) return "Email com formato inválido.";
 
+  if (email.length < 10 || email.length > 200) {
+    return "Nome deve ter entre 10 e 200 caracteres";
+  }
+
+  return null;
+}

@@ -1,4 +1,5 @@
 import express from 'express';
+import { testarConexao } from './config/conexao.js';
 
 import { route_cliente } from './router/cliente.js';
 
@@ -12,6 +13,7 @@ app.get("/", (req, res)=> {
     res.send("Hello Word.");    
 });
 
-app.listen(3000, ()=> {
+app.listen(3000, async ()=> {
+    await testarConexao()
     console.log("Servidor rodando na porta: 3000");
 });
