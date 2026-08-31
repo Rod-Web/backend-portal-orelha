@@ -1,19 +1,20 @@
 import {normalizarCPF} from '../utils/normalizarCPF.js'
 import { idadeMinima } from '../utils/idadeMinima.js';
+import { buscarInfosViaCep } from '../APIs/buscarInfosViaCep.js';
 
 import {repositoryBuscarClientePorCampo} from '../repository/cliente.js'
 
 export async function serviceInserirCliente(dados) {
   
   if(normalizarCPF(dados.cpf)) {
-    const erro = new Error = normalizarCPF(dados.cpf);
+    const erro = new Error(normalizarCPF(dados.cpf));
     erro.status = 400
     throw erro   
   }
   // RN do CPF PASSOU
   
   if(idadeMinima(dados.idade)) {
-    const erro = new Error = idadeMinima(dados.idade);
+    const erro = new Error(idadeMinima(dados.idade));
     erro.idade = 400
     throw erro
   }
@@ -23,8 +24,8 @@ export async function serviceInserirCliente(dados) {
   let campo = "email"
   const email = dados.email
   let usuario = await repositoryBuscarClientePorCampo(campo, email)
-  if(usuario) {
-    const erro = new Error = "Já existe um usuário com esse email";
+  if(usuario.length != 0) {
+    const erro = new Error("Já existe um usuário com esse email");
     erro.status = 409
     throw erro
   }
@@ -34,14 +35,28 @@ export async function serviceInserirCliente(dados) {
   campo = "telefone"
   const telefone = dados.telefone
   usuario = await repositoryBuscarClientePorCampo(campo, telefone)
-  if(usuario) {
-    const erro = new Error = "Já existe um usuário com esse telefone";
+  if(usuario.length != 0) {
+    const erro = new Error("Já existe um usuário com esse telefone");
     erro.status = 409
     throw erro
   }
   // RN do telefone passou
 
   // RN do cep 
+
+  const cepinfos = await buscarInfosViaCep(dados.endereco.cep)
+  if(cepinfos.erro){
+    const erro = new Error("O CEP informado não existe")
+    erro.status = 400
+    throw erro
+  } 
+  
+  const {logradouro, bairro, cep, estado, localidade: cidade} = cepinfos
+
+
+
+
+  
 
   // RN do numero de residencia
 
@@ -58,3 +73,15 @@ export async function serviceInserirCliente(dados) {
 
   // Mandar pro repository
 };
+await serviceInserirCliente({
+"cpf": "602.484.468-94",
+ "nome": "rodrigo Macaco",
+ "idade": 55,
+ "senha": "andreLindo08",
+ "telefone": "114845751482",
+ "email": "Andrelindao08@gmail.com",
+ "endereco": {
+    "cep": "08461-600",
+    "numero": "21"
+ }
+})
