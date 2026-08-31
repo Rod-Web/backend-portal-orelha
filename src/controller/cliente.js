@@ -15,9 +15,9 @@ export async function controllerInserirCliente(req, res, next) {
             }
         };
 
-        const user = await serviceInserirCliente(dados);
+        const nomeCliente = await serviceInserirCliente(dados);
         // TEM QUE VER O QUE VAMOS RETORNAR
-        return res.status(201).json({user})
+        return res.status(201).json({nomeCliente})
         
 
     } catch (error) {

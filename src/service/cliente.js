@@ -11,7 +11,7 @@ import { gerarHash } from '../utils/gerarHash.js';
 
 import { buscarInfosViaCep } from '../APIs/buscarInfosViaCep.js';
 
-import {repositoryBuscarClientePorCampo} from '../repository/cliente.js'
+import {repositoryBuscarClientePorCampo, repositoryCadastrarCliente} from '../repository/cliente.js'
 
 export async function serviceInserirCliente(dados) {
   dados.cpf = normalizarCPF(dados.cpf)
@@ -90,13 +90,22 @@ export async function serviceInserirCliente(dados) {
   const senhaCriptografada = await gerarHash(dados.senha)
   
   const user = {
-    dados: dados,
+    infosUser: dados,
     senha: senhaCriptografada,
     endereco: [logradouro, bairro, estado, cidade]
   };
 
   console.log(user)
-  return user
+  
+  const affectedRows = await repositoryCadastrarCliente(user)
+
+  if(affectedRows.cliente != 1 || affectedRows.endereco != 1){
+    const erro = new Error("Não foi possivel cadastrar o usuário. Entre em contato com o suporte.")
+
+    throw erro
+  }
+
+  return dados.nome
   
 
   
