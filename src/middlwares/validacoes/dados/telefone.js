@@ -9,7 +9,7 @@ export function validarTelefone(telefone) {
         return "Telefone deve ser um texto";
     }
 
-    telefone.trim();
+    telefone = telefone.trim();
 
     // Remove espaços, parênteses, traços e outros caracteres
     telefone = telefone.replace(/\D/g, "");

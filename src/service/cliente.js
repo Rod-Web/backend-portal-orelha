@@ -1,15 +1,42 @@
-import {normalizarCPF} from '../utils/normalizarCPF.js'
+import {normalizarCPF, validarCPF} from '../utils/normalizacao/RN-CPF.js'
+import { normalizarNome } from '../utils/normalizacao/RN-nome.js';
+import { normalizarEmail } from '../utils/normalizacao/RN-email.js';
+import { normalizarTelefone } from '../utils/normalizacao/RN-telefone.js';
+import { normalizarNumero } from '../utils/normalizacao/RN-numero.js';
+import { normalizarCEP } from '../utils/normalizacao/RN-CEP.js';
+
 import { idadeMinima } from '../utils/idadeMinima.js';
+import { validarSenha } from '../utils/validarSenha.js';
+import { gerarHash } from '../utils/gerarHash.js';
+
 import { buscarInfosViaCep } from '../APIs/buscarInfosViaCep.js';
 
 import {repositoryBuscarClientePorCampo} from '../repository/cliente.js'
 
 export async function serviceInserirCliente(dados) {
-  
-  if(normalizarCPF(dados.cpf)) {
-    const erro = new Error(normalizarCPF(dados.cpf));
+  dados.cpf = normalizarCPF(dados.cpf)
+  dados.nome = normalizarNome(dados.nome)
+  dados.email = normalizarEmail(dados.email)
+  dados.telefone = normalizarTelefone(dados.telefone)
+  dados.endereco.cep = normalizarCEP(dados.endereco.cep)
+  dados.endereco.numero = normalizarNumero(dados.endereco.numero)
+
+
+
+  const erroCPF = validarCPF(dados.cpf)
+  if(erroCPF) {
+    const erro = new Error(erroCPF);
     erro.status = 400
-    throw erro   
+    throw erro
+  }
+
+  let campo = "cpf"
+  const cpf = dados.cpf
+  let  usuario = await repositoryBuscarClientePorCampo(campo, cpf)
+  if(usuario.length != 0) {
+    const erro = new Error("Já existe um usuário com esse CPF");
+    erro.status = 409
+    throw erro
   }
   // RN do CPF PASSOU
   
@@ -21,9 +48,9 @@ export async function serviceInserirCliente(dados) {
   // RN da Idade Passou
 
   // PRECISAMOS VALIDAR SE O EMAIL É UNICO
-  let campo = "email"
+  campo = "email"
   const email = dados.email
-  let usuario = await repositoryBuscarClientePorCampo(campo, email)
+  usuario = await repositoryBuscarClientePorCampo(campo, email)
   if(usuario.length != 0) {
     const erro = new Error("Já existe um usuário com esse email");
     erro.status = 409
@@ -49,39 +76,29 @@ export async function serviceInserirCliente(dados) {
     const erro = new Error("O CEP informado não existe")
     erro.status = 400
     throw erro
-  } 
+  }
   
   const {logradouro, bairro, cep, estado, localidade: cidade} = cepinfos
 
+  // RN da senha
+  if (validarSenha(dados.senha)) {
+    const erro = new Error(validarSenha(dados.senha));
+    erro.status = 400;
+    throw erro;
+  }
 
+  const senhaCriptografada = await gerarHash(dados.senha)
+  
+  const user = {
+    dados: dados,
+    senha: senhaCriptografada,
+    endereco: [logradouro, bairro, estado, cidade]
+  };
 
-
+  console.log(user)
+  return user
   
 
-  // RN do numero de residencia
-
-  // RN da senha
-
-  // 
-
-  // Pegar dataAtual
-
-
-  // Validar se o usuário existe via CPF
-
-  // Montar escorpo dos dados
-
+  
   // Mandar pro repository
 };
-await serviceInserirCliente({
-"cpf": "602.484.468-94",
- "nome": "rodrigo Macaco",
- "idade": 55,
- "senha": "andreLindo08",
- "telefone": "114845751482",
- "email": "Andrelindao08@gmail.com",
- "endereco": {
-    "cep": "08461-600",
-    "numero": "21"
- }
-})
