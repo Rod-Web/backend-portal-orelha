@@ -11,7 +11,7 @@ import { gerarHash } from '../utils/gerarHash.js';
 
 import { buscarInfosViaCep } from '../APIs/buscarInfosViaCep.js';
 
-import {repositoryBuscarClientePorCampo, repositoryCadastrarCliente} from '../repository/cliente.js'
+import {repositoryBuscarUsuarioPorCampo, repositoryCadastrarCliente} from '../repository/cliente.js'
 
 export async function serviceInserirCliente(dados) {
   dados.cpf = normalizarCPF(dados.cpf)
@@ -32,7 +32,7 @@ export async function serviceInserirCliente(dados) {
 
   let campo = "cpf"
   const cpf = dados.cpf
-  let  usuario = await repositoryBuscarClientePorCampo(campo, cpf)
+  let  usuario = await repositoryBuscarUsuarioPorCampo(campo, cpf)
   if(usuario.length != 0) {
     const erro = new Error("Já existe um usuário com esse CPF");
     erro.status = 409
@@ -50,7 +50,7 @@ export async function serviceInserirCliente(dados) {
   // PRECISAMOS VALIDAR SE O EMAIL É UNICO
   campo = "email"
   const email = dados.email
-  usuario = await repositoryBuscarClientePorCampo(campo, email)
+  usuario = await repositoryBuscarUsuarioPorCampo(campo, email)
   if(usuario.length != 0) {
     const erro = new Error("Já existe um usuário com esse email");
     erro.status = 409
@@ -61,7 +61,7 @@ export async function serviceInserirCliente(dados) {
   // PRECISAMOS VALIDAR SE O NUMERO É UNICO
   campo = "telefone"
   const telefone = dados.telefone
-  usuario = await repositoryBuscarClientePorCampo(campo, telefone)
+  usuario = await repositoryBuscarUsuarioPorCampo(campo, telefone)
   if(usuario.length != 0) {
     const erro = new Error("Já existe um usuário com esse telefone");
     erro.status = 409
@@ -91,6 +91,7 @@ export async function serviceInserirCliente(dados) {
   
   const user = {
     infosUser: dados,
+    usuario: "cliente",
     senha: senhaCriptografada,
     endereco: [logradouro, bairro, estado, cidade]
   };
@@ -99,7 +100,7 @@ export async function serviceInserirCliente(dados) {
   
   const affectedRows = await repositoryCadastrarCliente(user)
 
-  if(affectedRows.cliente != 1 || affectedRows.endereco != 1){
+  if(affectedRows.cliente != 1 || affectedRows.endereco != 1 || affectedRows.usuario != 1){
     const erro = new Error("Não foi possivel cadastrar o usuário. Entre em contato com o suporte.")
 
     throw erro

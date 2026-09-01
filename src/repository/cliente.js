@@ -1,9 +1,9 @@
 import {pool} from '../config/conexao.js'
 
-export async function repositoryBuscarClientePorCampo(campo, valor) {
-    const [cliente] = await pool.execute(`SELECT * FROM cliente WHERE ${campo} = ?`, [valor]);
+export async function repositoryBuscarUsuarioPorCampo(campo, valor) {
+    const [usuario] = await pool.execute(`SELECT * FROM usuario WHERE ${campo} = ?`, [valor]);
 
-    return cliente
+    return usuario
 };
 
 export async function repositoryCadastrarCliente(dados) {
@@ -18,14 +18,17 @@ export async function repositoryCadastrarCliente(dados) {
 
     const [endereco] = await conn.execute(`INSERT INTO endereco (cep, logradouro, bairro, numero, estado, cidade) VALUES (?, ?, ?, ?, ?, ?)`, dadosEndereco)
 
-    const dadosCliente = [dados.infosUser.cpf, dados.infosUser.nome, dados.infosUser.idade, dados.infosUser.email, dados.senha, dados.infosUser.telefone, endereco.insertId]
+    const dadosUsuario = [dados.infosUser.cpf, dados.infosUser.nome, dados.infosUser.idade, dados.infosUser.email, dados.senha, dados.infosUser.telefone, dados.usuario]
     
-    const [cliente] = await conn.execute(`INSERT INTO cliente (cpf, nome, idade, email, senha, telefone, endereco_id) VALUES (?, ?, ?, ?, ?, ?, ?)`, dadosCliente )
+    const [usuario] = await conn.execute(`INSERT INTO usuario (cpf, nome, idade, email, senha, telefone, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?)`, dadosUsuario);
 
+    const dadosCliente = [dados.infosUser.cpf, endereco.insertId];
+
+    const [cliente] = await conn.execute(`INSERT INTO cliente (cpf_cliente, id_endereco) VALUES (?, ?)`, dadosCliente);
+    
     conn.commit()
 
-    const affectedRow = {cliente: cliente.affectedRows, endereco: endereco.affectedRows
-    } 
+    const affectedRow = {usuario: usuario.affectedRows, endereco: endereco.affectedRows, cliente: cliente.affectedRows} 
 
     console.log(affectedRow)
 
