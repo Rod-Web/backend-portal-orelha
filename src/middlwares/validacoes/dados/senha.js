@@ -1,6 +1,9 @@
 export function validarSenha(senha) {
+
+  senha = senha.trim()
+
   // Verifica se foi informada
-  if (senha === undefined || senha === null || senha === "") return "Senha é obrigatória";
+  if (!senha) return "Senha é obrigatória";
 
   // Verifica se é texto
   if (typeof senha !== "string") return "Senha deve ser um texto";

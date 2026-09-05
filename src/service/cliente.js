@@ -1,35 +1,26 @@
-import {normalizarCPF, validarCPF} from '../utils/normalizacao/RN-CPF.js'
-import { normalizarNome } from '../utils/normalizacao/RN-nome.js';
-import { normalizarEmail } from '../utils/normalizacao/RN-email.js';
-import { normalizarTelefone } from '../utils/normalizacao/RN-telefone.js';
-import { normalizarNumero } from '../utils/normalizacao/RN-numero.js';
-import { normalizarCEP } from '../utils/normalizacao/RN-CEP.js';
-
+import { normalizarDadosCliente } from '../utils/normalizarDadosCliente.js';
 import { idadeMinima } from '../utils/idadeMinima.js';
-import { validarSenha } from '../utils/validarSenha.js';
-import { gerarHash } from '../utils/gerarHash.js';
+import { validarSenha } from '../utils/validacoes/validarSenha.js';
 
 import { buscarInfosViaCep } from '../APIs/buscarInfosViaCep.js';
+
+import { gerarHash } from "../utils/gerarHash.js";
 
 import {repositoryBuscarUsuarioPorCampo, repositoryCadastrarCliente} from '../repository/cliente.js'
 
 export async function serviceInserirCliente(dados) {
-  dados.cpf = normalizarCPF(dados.cpf)
-  dados.nome = normalizarNome(dados.nome)
-  dados.email = normalizarEmail(dados.email)
-  dados.telefone = normalizarTelefone(dados.telefone)
-  dados.endereco.cep = normalizarCEP(dados.endereco.cep)
-  dados.endereco.numero = normalizarNumero(dados.endereco.numero)
-
-
-
-  const erroCPF = validarCPF(dados.cpf)
-  if(erroCPF) {
-    const erro = new Error(erroCPF);
-    erro.status = 400
-    throw erro
-  }
-
+  // NORMALIZAÇÂO
+  dados = normalizarDadosCliente(
+    dados.cpf,
+    dados.nome,
+    dados.idade,
+    dados.email,
+    dados.senha,
+    dados.telefone,
+    dados.endereco.cep,
+    dados.endereco.numero,
+  );
+  // VALIDAR SE O CPF É UNICO
   let campo = "cpf"
   const cpf = dados.cpf
   let  usuario = await repositoryBuscarUsuarioPorCampo(campo, cpf)
@@ -38,16 +29,15 @@ export async function serviceInserirCliente(dados) {
     erro.status = 409
     throw erro
   }
-  // RN do CPF PASSOU
-  
+
+  // VALIDAR SE A IDADE É >= 18
   if(idadeMinima(dados.idade)) {
     const erro = new Error(idadeMinima(dados.idade));
     erro.status = 422
     throw erro
   }
-  // RN da Idade Passou
 
-  // PRECISAMOS VALIDAR SE O EMAIL É UNICO
+  // VALIDAR SE O EMAIL É UNICO
   campo = "email"
   const email = dados.email
   usuario = await repositoryBuscarUsuarioPorCampo(campo, email)
@@ -56,9 +46,8 @@ export async function serviceInserirCliente(dados) {
     erro.status = 409
     throw erro
   }
-  // RN de email passou
 
-  // PRECISAMOS VALIDAR SE O NUMERO É UNICO
+  // VALIDAR SE O TELEFONE É UNICO
   campo = "telefone"
   const telefone = dados.telefone
   usuario = await repositoryBuscarUsuarioPorCampo(campo, telefone)
@@ -67,10 +56,8 @@ export async function serviceInserirCliente(dados) {
     erro.status = 409
     throw erro
   }
-  // RN do telefone passou
 
-  // RN do cep 
-
+  // VALIDAR SE O CEP EXISTE
   const cepinfos = await buscarInfosViaCep(dados.endereco.cep)
   if(cepinfos.erro){
     const erro = new Error("O CEP informado não existe")
@@ -78,17 +65,22 @@ export async function serviceInserirCliente(dados) {
     throw erro
   }
   
+  // COLETAR INFORMAÇÕES DO CEP
   const {logradouro, bairro, cep, estado, localidade: cidade} = cepinfos
 
-  // RN da senha
+
+  // VALIDAR SE A SENHA POSSUÍ OS CRITÉRIOS ESPECÍFICOS
+  console.log(dados.senha)
   if (validarSenha(dados.senha)) {
     const erro = new Error(validarSenha(dados.senha));
     erro.status = 422;
     throw erro;
   }
 
+  // CRIPTOGRAFAR SENHA
   const senhaCriptografada = await gerarHash(dados.senha)
   
+  // JUNTAR INFORMAÇÕES DO USUÁRIO
   const user = {
     infosUser: dados,
     usuario: "cliente",
@@ -96,19 +88,17 @@ export async function serviceInserirCliente(dados) {
     endereco: [logradouro, bairro, estado, cidade]
   };
 
-  console.log(user)
-  
+  // ENVIAR AS INFORMAÇÕES PARA O BANCO DE DADOS
   const affectedRows = await repositoryCadastrarCliente(user)
 
+  // VALIDAR SE AS TABELAS SOFRERAM ALTERAÇÕES
   if(affectedRows.cliente != 1 || affectedRows.endereco != 1 || affectedRows.usuario != 1){
     const erro = new Error("Não foi possivel cadastrar o usuário. Entre em contato com o suporte.")
 
     throw erro
   }
 
+  // RETORNAR O USUÁRIO CADASTRADO
   return dados.nome
   
-
-  
-  // Mandar pro repository
 };

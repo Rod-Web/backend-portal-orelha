@@ -1,20 +1,9 @@
-export function normalizarCPF(cpf) {
-  // RN01 — Normalização
-  return cpf = cpf.replace(/\D/g, "");
-}
-
-export function validarCPF(cpf) {
-    
-  // RN02 — Quantidade de dígitos
-  if (cpf.length !== 11) return "CPF precisa ter exatamente 11 dígitos";
-
-  // RN03 — CPFs com dígitos repetidos
-
+export function validarCPFMatematicamente(cpf) {
+  
   if (/^(\d)\1{10}$/.test(cpf)) {
     return "CPF não pode ter todos os dígitos iguais";
   }
 
-  // RN04 — Primeiro dígito verificador
 
   let soma = 0;
 
@@ -43,5 +32,5 @@ export function validarCPF(cpf) {
     return "O CPF informado é inválido.";
   }
 
-  return null
+  return null;
 }

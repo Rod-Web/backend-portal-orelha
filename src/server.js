@@ -1,15 +1,24 @@
-import express, { text } from 'express';
+import express from 'express';
+import cors from 'cors';
+
 import { testarConexao } from './config/conexao.js';
-import { bancoDeDados } from './config/credenciais.js'
 
 import { route_cliente } from './routes/cliente.js';
+import { route_login } from './routes/login.js';
 import { middlewaresError } from './middlwares/validacoes/error/erroGlobal.js';
 
 const app = express();
 
 app.use(express.json());
 
+// A ESTUDAR MELHOR
+app.use(cors({
+    origin: "*",
+    credentials: true
+}));
+
 app.use('/cliente', route_cliente);
+app.use('/login', route_login);
 
 app.use(middlewaresError)
 

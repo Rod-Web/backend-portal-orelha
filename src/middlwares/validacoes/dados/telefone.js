@@ -1,28 +1,23 @@
 export function validarTelefone(telefone) {
+  telefone = telefone.trim();
   // Verifica se o telefone foi informado
-  if (telefone === undefined || telefone === null || telefone === "") {
-    return "Telefone é obrigatório";
-  }
+  if (!telefone) return "Telefone é obrigatório";
 
   // Verifica se o telefone é um texto
-  if (typeof telefone !== "string") {
-    return "Telefone deve ser um texto";
+  if (typeof telefone !== "string") return "Telefone deve ser um texto";
+
+  // Só permite números, hífen, espaços e parênteses
+  if (!/^[\d\s()-]+$/.test(telefone)) {
+    return "Telefone contém caracteres inválidos";
   }
 
-  telefone = telefone.trim();
-
-  // Telefone só pode ser números
-  if (!/^\d{10,11}$/.test(telefone)) {
-    return "Telefone precisa ser só número";
-  }
-  
-  // Remove espaços, parênteses, traços e outros caracteres
+  // Remove tudo que não for número
   telefone = telefone.replace(/\D/g, "");
 
   // Telefone precisa ter 10 ou 11 dígitos
   if (telefone.length !== 10 && telefone.length !== 11) {
     return "Telefone precisa ter 10 ou 11 dígitos";
   }
-
+  
   return null;
 };

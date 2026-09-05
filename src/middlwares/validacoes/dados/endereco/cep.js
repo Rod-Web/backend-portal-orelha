@@ -1,6 +1,8 @@
 export function validarCEP(cep) {
+  cep = cep.trim();
+
   // Verifica se foi informado
-  if (cep === undefined || cep === null || cep === "") {
+  if (!cep) {
     return "CEP é obrigatório";
   }
 
@@ -11,14 +13,11 @@ export function validarCEP(cep) {
 
   // Verifica se possui apenas números e hífen
   if (!/^[\d-]+$/.test(cep)) {
-    return "CEP inválido, só pode conter números";
+    return "CEP só pode conter números e hifen";
   }
-  
-  // Remove espaços, pontos e traços
-  cep = cep.replace(/\D/g, "");
 
-  // CEP precisa ter exatamente 8 dígitos
-  if (cep.length !== 8) {
+  // CEP precisa ter exatamente 8 dígitos depois de remover o hifen
+  if (cep.replace(/\D/g, "").length !== 8) {
     return "CEP precisa ter exatamente 8 dígitos";
   }
 
