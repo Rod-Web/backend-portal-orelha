@@ -42,7 +42,7 @@ export async function serviceInserirCliente(dados) {
   
   if(idadeMinima(dados.idade)) {
     const erro = new Error(idadeMinima(dados.idade));
-    erro.idade = 422
+    erro.status = 422
     throw erro
   }
   // RN da Idade Passou
