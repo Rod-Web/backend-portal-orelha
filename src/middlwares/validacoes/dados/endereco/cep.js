@@ -11,7 +11,7 @@ export function validarCEP(cep) {
 
   // Verifica se só tem número
   if (!/^\d{5}-?\d{3}$/.test(cep)) {
-    return "CEP inválido";
+    return "CEP inválido, só pode numero";
   }
 
   // Remove espaços, pontos e traços
