@@ -1,5 +1,6 @@
-import express from 'express';
+import express, { text } from 'express';
 import { testarConexao } from './config/conexao.js';
+import { bancoDeDados } from './config/credenciais.js'
 
 import { route_cliente } from './routes/cliente.js';
 import { middlewaresError } from './middlwares/validacoes/error/erroGlobal.js';
@@ -13,7 +14,8 @@ app.use('/cliente', route_cliente);
 app.use(middlewaresError)
 
 app.get("/", (req, res)=> {
-    res.send("Hello Word.");    
+    const credenciais = bancoDeDados()
+    res.send("Backend rodando.   " + credenciais.host);    
 });
 
 app.listen(3000, async ()=> {
