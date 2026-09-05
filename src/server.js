@@ -14,8 +14,7 @@ app.use('/cliente', route_cliente);
 app.use(middlewaresError)
 
 app.get("/", (req, res)=> {
-    const credenciais = bancoDeDados()
-    res.send("Backend rodando.   " + credenciais.host);    
+    res.send("Backend rodando.");    
 });
 
 app.listen(3000, async ()=> {

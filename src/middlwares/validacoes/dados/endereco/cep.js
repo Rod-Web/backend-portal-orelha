@@ -9,6 +9,11 @@ export function validarCEP(cep) {
     return "CEP deve ser um texto";
   }
 
+  // Verifica se só tem número
+  if (!/^\d{5}-?\d{3}$/.test(cep)) {
+    return "CEP inválido";
+  }
+
   // Remove espaços, pontos e traços
   cep = cep.replace(/\D/g, "");
 

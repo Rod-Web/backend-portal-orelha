@@ -14,6 +14,11 @@ export function validarTelefone(telefone) {
     // Remove espaços, parênteses, traços e outros caracteres
     telefone = telefone.replace(/\D/g, "");
 
+    // Telefone só pode ser números
+    if (!/^\d{10,11}$/.test(telefone)) {
+      return "Telefone precisa ser só número";
+    }
+
     // Telefone precisa ter 10 ou 11 dígitos
     if (telefone.length !== 10 && telefone.length !== 11) {
         return "Telefone precisa ter 10 ou 11 dígitos";

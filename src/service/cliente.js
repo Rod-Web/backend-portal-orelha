@@ -42,7 +42,7 @@ export async function serviceInserirCliente(dados) {
   
   if(idadeMinima(dados.idade)) {
     const erro = new Error(idadeMinima(dados.idade));
-    erro.idade = 400
+    erro.idade = 422
     throw erro
   }
   // RN da Idade Passou
@@ -83,7 +83,7 @@ export async function serviceInserirCliente(dados) {
   // RN da senha
   if (validarSenha(dados.senha)) {
     const erro = new Error(validarSenha(dados.senha));
-    erro.status = 400;
+    erro.status = 422;
     throw erro;
   }
 
