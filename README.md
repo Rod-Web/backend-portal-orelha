@@ -128,6 +128,80 @@ Retornado caso ocorra uma falha inesperada no processamento da requisição ou q
 
 ### 2. Login
 
+#### 🚀 `POST` `/login`
+
+Responsável por autenticar o cliente no sistema. A requisição deve ser feita no formato `application/json`.
+
+**📋 Regras de Validação (Payload)**
+
+| Campo | Tipo | Obrigatório | Regras de Negócio |
+| :--- | :--- | :---: | :--- |
+| `cpf` | `String` | Sim | • Exatamente 11 dígitos numéricos.<br>• Não pode conter todos os dígitos iguais.<br>• Deve ser um CPF matematicamente válido.<br>• **Validação:** O CPF informado precisa estar previamente cadastrado no sistema. |
+| `senha` | `String` | Sim | • Tamanho: 8 a 30 caracteres.<br>• **Requisitos:** Mínimo de 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial.<br>• **Autenticação:** A senha informada deve corresponder exatamente à senha armazenada para o usuário do CPF inserido. |
+
+**💻 Exemplo de Requisição**
+
+```json
+{
+  "cpf": "12345678909",
+  "senha": "Password@123"
+}
+
+```
+
+---
+
+**📬 Respostas**
+
+**✅ Sucesso**
+
+**`200 OK` - Login Efetuado**
+Retornado quando as credenciais estão corretas.<br>
+*Nota para o Front-end: A API não retorna os tokens no corpo da resposta por questões de segurança. Eles são injetados automaticamente no navegador via cookies `HttpOnly` (`accessToken` e `refreshToken`), que serão enviados automaticamente nas próximas requisições de acordo com os caminhos especificados.*
+
+```json
+{
+  "mensagem": "Login efetuado com sucesso."
+}
+
+```
+
+**❌ Respostas de Erro**
+
+Em caso de falha na requisição, a API retornará um objeto JSON contendo a chave `"erro"` com a descrição do motivo da falha.
+
+* **`400 Bad Request` - Dados Inválidos (Validação)**
+Retornado pelo middleware caso os dados enviados não respeitem as regras de formatação (ex: CPF com tamanho errado ou senha fora do padrão).
+*Exemplo:*
+```json
+{
+  "erro": "Dados inválidos"
+}
+
+```
+
+
+* **`401 Unauthorized` - Credenciais Incorretas**
+Retornado caso o CPF não seja encontrado no banco de dados ou a senha não corresponda à senha criptografada armazenada. (A mensagem é unificada propositalmente para não revelar se o erro foi no CPF ou na senha, aumentando a segurança).
+*Exemplo:*
+```json
+{
+  "erro": "Usuário ou senha incorreto."
+}
+
+```
+
+
+* **`500 Internal Server Error` - Erro no Servidor**
+Retornado caso ocorra uma falha inesperada durante a busca no banco de dados ou na geração dos tokens JWT.
+*Exemplo:*
+```json
+{
+  "erro": "Erro interno no servidor. Informe o suporte técnico."
+}
+
+```
+
 ```
 
 ```
