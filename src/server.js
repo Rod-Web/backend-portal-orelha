@@ -13,6 +13,7 @@ app.use(express.json());
 
 // A ESTUDAR MELHOR
 app.use(cors({
+    // definir rotas
     origin: "*",
     credentials: true
 }));

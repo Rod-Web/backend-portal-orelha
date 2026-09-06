@@ -1,11 +1,5 @@
 import {pool} from '../config/conexao.js'
 
-export async function repositoryBuscarUsuarioPorCampo(campo, valor) {
-    const [usuario] = await pool.execute(`SELECT * FROM usuario WHERE ${campo} = ?`, [valor]);
-
-    return usuario
-};
-
 export async function repositoryCadastrarCliente(dados) {
 
     const conn = await pool.getConnection()
@@ -22,9 +16,9 @@ export async function repositoryCadastrarCliente(dados) {
     
     const [usuario] = await conn.execute(`INSERT INTO usuario (cpf, nome, idade, email, senha, telefone, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?)`, dadosUsuario);
 
-    const dadosCliente = [dados.infosUser.cpf, endereco.insertId];
+    const dadosCliente = [usuario.insertId, endereco.insertId];
 
-    const [cliente] = await conn.execute(`INSERT INTO cliente (cpf_cliente, id_endereco) VALUES (?, ?)`, dadosCliente);
+    const [cliente] = await conn.execute(`INSERT INTO cliente (id_usuario, id_endereco) VALUES (?, ?)`, dadosCliente);
     
     conn.commit()
 

@@ -13,3 +13,12 @@ export function bancoDeDados() {
 
     return dados;
 }
+
+export function segredoJwt() {
+    const dados = {
+        access_token: process.env.ACCESS_TOKEN_SECRET,
+        refresh_token: process.env.REFRESH_TOKEN_SECRET
+    }
+
+    return dados;
+};

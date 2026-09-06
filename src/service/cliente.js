@@ -1,4 +1,4 @@
-import { normalizarDadosCliente } from '../utils/normalizarDadosCliente.js';
+import { normalizarDadosCliente } from '../utils/normalizacoes/normalizarDadosCliente.js';
 import { idadeMinima } from '../utils/idadeMinima.js';
 import { validarSenha } from '../utils/validacoes/validarSenha.js';
 
@@ -6,7 +6,8 @@ import { buscarInfosViaCep } from '../APIs/buscarInfosViaCep.js';
 
 import { gerarHash } from "../utils/gerarHash.js";
 
-import {repositoryBuscarUsuarioPorCampo, repositoryCadastrarCliente} from '../repository/cliente.js'
+import { repositoryBuscarUsuarioPorCampo } from '../repository/usuario.js';
+import {repositoryCadastrarCliente} from '../repository/cliente.js'
 
 export async function serviceInserirCliente(dados) {
   // NORMALIZAÇÂO
@@ -20,6 +21,7 @@ export async function serviceInserirCliente(dados) {
     dados.endereco.cep,
     dados.endereco.numero,
   );
+  
   // VALIDAR SE O CPF É UNICO
   let campo = "cpf"
   const cpf = dados.cpf

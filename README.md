@@ -16,7 +16,8 @@ Todas as requisições devem ser apontadas para o servidor de produção:
   * [`POST /cliente/inserirCliente`](#1-cadastro-de-cliente) - Registra um novo cliente no sistema.
   * *(Adicione aqui outras rotas futuras do seu projeto, ex: `GET /cliente/listar`)*
 * **Autenticação** *(Exemplo de módulo futuro)*
-  * *(Adicione aqui as rotas de login)*
+  * [`POST /login`](#2-login) - Efetuar o login. 
+  *(Adicione aqui as rotas de login)*
 
 ---
 
@@ -125,7 +126,7 @@ Retornado caso ocorra uma falha inesperada no processamento da requisição ou q
 
 ```
 
-
+### 2. Login
 
 ```
 
