@@ -12,11 +12,13 @@ const app = express();
 app.use(express.json());
 
 // A ESTUDAR MELHOR
-app.use(cors({
+app.use(
+  cors({
     // definir rotas
-    origin: "*",
-    credentials: true
-}));
+    origin: "http://127.0.0.1:5500",
+    credentials: true,
+  }),
+);
 
 app.use('/cliente', route_cliente);
 app.use('/login', route_login);

@@ -1,10 +1,12 @@
 export function validarCEP(cep) {
-  cep = cep.trim();
+
 
   // Verifica se foi informado
-  if (!cep) {
+  if (!cep || !cep.trim()) {
     return "CEP é obrigatório";
   }
+
+  cep = cep.trim();
 
   // Verifica se é texto
   if (typeof cep !== "string") {

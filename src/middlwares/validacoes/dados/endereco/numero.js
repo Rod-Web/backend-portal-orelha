@@ -1,10 +1,11 @@
 export function validarNumero(numero) {
-  numero = numero.trim();
 
   // Verifica se foi informado
-  if (!numero) {
+  if (!numero || !numero.trim()) {
     return "Número é obrigatório";
   }
+
+  numero = numero.trim();
 
   // Verifica se é texto
   if (typeof numero !== "string") {

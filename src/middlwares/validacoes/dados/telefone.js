@@ -1,7 +1,9 @@
 export function validarTelefone(telefone) {
-  telefone = telefone.trim();
+
   // Verifica se o telefone foi informado
-  if (!telefone) return "Telefone é obrigatório";
+  if (!telefone || !telefone.trim()) return "Telefone é obrigatório";
+
+  telefone = telefone.trim();
 
   // Verifica se o telefone é um texto
   if (typeof telefone !== "string") return "Telefone deve ser um texto";

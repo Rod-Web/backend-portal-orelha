@@ -7,13 +7,13 @@ export async function controllerLogin(req, res, next) {
         res
         .cookie("accessToken", tokens.accessToken, {
             httpOnly: true,
-            secure: true,
+            secure: false,
             sameSite: "none",
             path: '/rotasprivadas'
         })
         .cookie('refreshToken', tokens.refreshToken, {
             httpOnly: true, // JavasCript não pode ler
-            secure: true, // Só permite https
+            secure: false, // Só permite https
             sameSite: "none", // Permite cross-site, consumir a API em dominio diferente
             path: '/auth/refresh'
         })

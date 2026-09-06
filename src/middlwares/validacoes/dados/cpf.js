@@ -2,10 +2,10 @@ import {validarCPFMatematicamente} from '../../../utils/validacoes/validacaoCPFM
 
 export function validarCPF(cpf) {
 
-  cpf = cpf.trim();
-
   // Validar se existe
-  if (!cpf) return "O CPF não foi informado";
+  if (!cpf || !cpf.trim()) return "O CPF não foi informado";
+
+  cpf = cpf.trim();
 
   // Validar se é string
   if (typeof cpf !== "string") return "O CPF precisa ser uma string.";

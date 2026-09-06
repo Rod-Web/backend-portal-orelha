@@ -1,7 +1,8 @@
 export function validarEmail(email) {
 
+  if (!email || !email.trim()) return "Preencha o campo do email.";
+
   email = email.trim();
-  if (!email) return "Preencha o campo do email.";
 
   if (typeof email !== "string") return "O email deve ser uma string.";
 
