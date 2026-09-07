@@ -7,6 +7,8 @@ import { testarConexao } from './config/conexao.js';
 import { route_cliente } from './routes/cliente.js';
 import { route_login } from './routes/login.js';
 import { route_refresh } from './routes/refresh.js'
+import { route_gerente } from './routes/gerente.js';
+
 import { middlewaresError } from './middlwares/validacoes/error/erroGlobal.js';
 
 const app = express();
@@ -25,7 +27,8 @@ app.use(
 
 app.use('/cliente', route_cliente);
 app.use('/login', route_login);
-app.use('/auth', route_refresh)
+app.use('/auth', route_refresh);
+app.use('/api/gerente', route_gerente);
 
 app.use(middlewaresError)
 
