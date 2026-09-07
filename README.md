@@ -5,25 +5,31 @@ Bem-vindo à documentação oficial da API do **Portal Orelha**. Este documento 
 A API foi desenvolvida seguindo os princípios REST, utilizando primariamente o formato `application/json` para o envio e recebimento de dados, além de adotar os códigos de status HTTP convencionais para o tratamento de sucessos e erros.
 
 ### 🔗 Base URL
+
 Todas as requisições devem ser apontadas para o servidor de produção:
-> `https://backend-portal-orelha.onrender.com`
+
+> `(https://backend-portal-orelha.onrender.com)`
 
 ---
 
 ## 🗂️ Sumário de Rotas
 
 * **Clientes**
-  * [`POST /cliente/inserirCliente`](#1-cadastro-de-cliente) - Registra um novo cliente no sistema.
-  * *(Adicione aqui outras rotas futuras do seu projeto, ex: `GET /cliente/listar`)*
-* **Autenticação** *(Exemplo de módulo futuro)*
-  * [`POST /login`](#2-login) - Efetuar o login. 
-  *(Adicione aqui as rotas de login)*
+* [`POST /cliente/inserirCliente`](https://www.google.com/search?q=%231-cadastro-de-cliente) - Registra um novo cliente no sistema.
+
+
+* **Autenticação**
+* [`POST /login`](https://www.google.com/search?q=%232-login) - Efetuar o login no sistema.
+* [`POST /auth/refresh`](https://www.google.com/search?q=%233-atualizar-token-de-acesso-refresh) - Atualiza o token de acesso expirado.
+
+
 
 ---
 
 ## 🧑‍💻 Especificação dos Endpoints
 
-Abaixo estão detalhadas as especificações de cada rota, começando pelo módulo de clientes.
+Abaixo estão detalhadas as especificações de cada rota.
+
 
 ### 1. Cadastro de Cliente
 
@@ -126,6 +132,30 @@ Retornado caso ocorra uma falha inesperada no processamento da requisição ou q
 
 ```
 
+---
+
+### 🍪 Sobre a Autenticação e Cookies
+
+O **Portal Orelha** utiliza tokens JWT (JSON Web Tokens) para gerenciar a sessão dos usuários de forma segura. Para evitar ataques XSS, a API **não** trafega os tokens no corpo das requisições ou respostas. Todo o fluxo de autenticação é feito via **Cookies HTTPOnly**.
+
+* **Configuração Front-end:** Devido à política de CORS da API (configurada com `credentials: true`), todas as requisições feitas pelo Front-end no método fetch().
+
+**Estrutura dos Cookies:**
+
+1. **`accessToken`**:
+* **Propósito:** Autorizar o acesso do usuário às rotas protegidas da API.
+* **Conteúdo (Payload):** Contém o `id` e o `tipo_usuario` do cliente logado.
+* **Comportamento:** Injetado automaticamente pelo servidor após o Login e renovado pela rota de Refresh.
+
+
+2. **`refreshToken`**:
+* **Propósito:** Utilizado exclusivamente para gerar um novo Access Token quando o atual expirar, mantendo o usuário logado de forma transparente.
+* **Comportamento:** O servidor lê este token automaticamente através do `cookie-parser` na rota `/auth/refresh`.
+
+
+
+---
+
 ### 2. Login
 
 #### 🚀 `POST` `/login`
@@ -148,8 +178,6 @@ Responsável por autenticar o cliente no sistema. A requisição deve ser feita 
 }
 
 ```
-
----
 
 **📬 Respostas**
 
@@ -201,6 +229,67 @@ Retornado caso ocorra uma falha inesperada durante a busca no banco de dados ou 
 }
 
 ```
+
+---
+
+### 3. Atualizar Token de Acesso (Refresh)
+
+#### 🚀 `POST` `/auth/refresh`
+
+Responsável por interceptar o cookie `refreshToken` do usuário, validá-lo e gerar um novo `accessToken` válido para continuar navegando no sistema sem precisar realizar o login novamente.
+
+**📋 Regras de Validação (Payload)**
+
+| Campo | Tipo | Obrigatório | Regras de Negócio |
+| --- | --- | --- | --- |
+| `Body` | `Vazio` | Não | Esta rota não exige o envio de dados no corpo (JSON) da requisição. |
+| `Cookie` | `refreshToken` | Sim | O navegador deve enviar automaticamente o cookie contendo o Refresh Token válido. O middleware barrará a requisição caso ele não exista. |
+
+**💻 Exemplo de Requisição (Front-end HTTP)**
+
+```http
+POST /auth/refresh HTTP/1.1
+Host: backend-portal-orelha.onrender.com
+Cookie: refreshToken=eyJhbGciOiJIUzI1NiIsInR5c...
+
+```
+
+**📬 Respostas**
+
+**✅ Sucesso**
+
+**`200 OK` - Sessão Renovada**
+Retornado quando o serviço valida o `refreshToken`, decodifica os dados, e injeta com sucesso um novo `accessToken` nos cookies de resposta do navegador.
+
+```json
+{
+  "mensagem": "Token atualizado com sucesso."
+}
+
+```
+
+**❌ Respostas de Erro**
+
+* **`401 Unauthorized` - Cookie Inexistente**
+Retornado pelo middleware `dadosRefresh` caso a requisição chegue sem o cookie do Refresh Token.
+*Exemplo:*
+
+```json
+{
+  "erro": "O cookie refresh não existe."
+}
+
+```
+
+* **`401 Unauthorized` / `403 Forbidden` - Token Inválido ou Expirado**
+Retornado caso o cookie exista, mas a validação identifique que o token foi adulterado, está expirado ou possui assinatura inválida.
+*Exemplo:*
+
+```json
+{
+  "erro": "Token expirado ou inválido. Por favor, faça login novamente."
+}
+
 
 ```
 
