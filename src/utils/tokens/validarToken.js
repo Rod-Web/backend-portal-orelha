@@ -12,3 +12,14 @@ export function validarRefresh(refresh) {
         throw erro
     }
 };
+
+export function validarAccess(access_token) {
+    try {
+        const payload = jsonwebtoken.verify(access_token, segredoJwt().access_token);  
+        return  payload
+    } catch (error) {
+        console.error(error.message)
+        const erro = "Token de atualização inválido ou expirado";
+        return erro
+    }
+};

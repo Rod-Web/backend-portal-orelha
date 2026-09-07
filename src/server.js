@@ -28,7 +28,7 @@ app.use(
 app.use('/cliente', route_cliente);
 app.use('/login', route_login);
 app.use('/auth', route_refresh);
-app.use('/api/gerente', route_gerente);
+app.use("/rotasprivadas/gerente", route_gerente);
 
 app.use(middlewaresError)
 
