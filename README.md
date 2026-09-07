@@ -293,4 +293,137 @@ Retornado caso o cookie exista, mas a validação identifique que o token foi ad
 
 ```
 
+---
+
+### 4. Cadastro de Funcionário
+
+#### 🚀 `POST` `/rotasprivadas/gerente/inserirFuncionario`
+
+Responsável por registrar um novo funcionário no sistema. A requisição deve ser feita no formato `application/json`.
+
+---
+
+**🔐 Autorização de Acesso**
+
+Antes de processar o cadastro, a API verifica automaticamente o cookie `accessToken` enviado pelo navegador.
+
+O `accessToken` precisa:
+1. Existir na requisição;
+2. Ser um token válido e não expirado;
+3. Pertencer a um usuário com o tipo de usuário gerente.
+
+Caso o token seja válido, mas o usuário não seja um gerente, o acesso ao serviço será negado.
+
+---
+
+**📋 Regras de Validação (Payload)**
+
+| Campo | Tipo | Obrigatório | Regras de Negócio |
+| :--- | :--- | :---: | :--- |
+| `cpf` | `String` | Sim | • Exatamente 11 dígitos numéricos.<br>• Não pode conter todos os dígitos iguais.<br>• Deve ser um CPF matematicamente válido.<br>• **Único:** Não pode existir outro usuário com o mesmo CPF. |
+| `nome` | `String` | Sim | • Tamanho: 3 a 100 caracteres.<br>• Permitido apenas letras (A-Z, a-z). |
+| `idade` | `Integer` | Sim | • Valores permitidos: 18 a 120 (anos). |
+| `email` | `String` | Sim | • Tamanho: 10 a 200 caracteres.<br>• Formato de e-mail válido (`@`, `.` e domínio).<br>• **Único:** Não pode existir outro usuário com o mesmo e-mail. |
+| `telefone` | `String` | Sim | • Tamanho: 10 a 11 dígitos numéricos.<br>• **Único:** Não pode existir outro usuário com o mesmo telefone. |
+| `senha` | `String` | Sim | • Tamanho: 8 a 30 caracteres.<br>• **Requisitos:** Mínimo de 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial. |
+
+**💻 Exemplo de Requisição**
+
+```json
+{
+    "cpf": "529.982.247-25",
+    "nome": "Nicollas Henrique",
+    "idade": 18,
+    "email": "nicollasHenrique@gmail.com",
+    "senha": "NicollasFeio18@",
+    "telefone": "11959235017"
+}
+
 ```
+
+---
+
+**📬 Respostas**
+
+**✅ Sucesso**
+
+**`201 Created` - Funcionário Cadastrado**
+Retornado quando o funcionário é inserido com sucesso e todas as validações são aprovadas.
+
+```json
+{
+  "nomeFuncionário": "Nicollas Henrique"
+}
+
+```
+
+**❌ Respostas de Erro**
+
+Em caso de falha na requisição, a API retornará um objeto JSON contendo a chave `"erro"` com a descrição do motivo da falha, acompanhado do código de status HTTP correspondente.
+
+* **`400 Bad Request` - Erro de Validação de Formato**
+Retornado quando a requisição possui campos ausentes, tipos de dados incorretos ou formatos inválidos (ex: ausência de arroba no e-mail, senhas fora do padrão, CEP incompleto).
+*Exemplo:*
+```json
+{
+  "erro": "CEP precisa ter exatamente 8 dígitos"
+}
+
+```
+
+
+* **`401 Unauthorized` - Access Token Inválido ou Inexistente**
+Retornado quando o `accessToken` não existe, está expirado, possui assinatura inválida ou não pode ser validado.
+*Exemplo:*
+```json
+{
+  "erro": "Token expirado ou inválido. Por favor, faça login novamente."
+}
+
+```
+
+
+* **`403 Forbidden` - Usuário sem Permissão**
+Retornado quando o `accessToken` é válido, mas o usuário autenticado não possui permissão de gerente para acessar esse serviço.
+*Exemplo:*
+```json
+{
+  "erro": "Usuário não tem permissão para acessar esse serviço."
+}
+
+```
+
+
+* **`409 Conflict` - Conflito de Dados**
+Retornado quando há uma tentativa de cadastrar um dado que possui regra de unicidade no banco de dados e já está em uso por outro cliente (CPF, e-mail ou telefone).
+*Exemplo:*
+```json
+{
+  "erro": "Já existe um usuário com esse CPF"
+}
+
+```
+
+
+* **`422 Unprocessable Entity` - Erro de Regra de Negócio**
+Retornado quando a requisição está com o formato correto, mas os dados enviados violam regras de negócio ou semânticas da aplicação (como restrições de idade).
+*Exemplo:*
+```json
+{
+  "erro": "Para efetuar o cadastro é necessário ser maior de idade"
+}
+
+```
+
+
+* **`500 Internal Server Error` - Erro no Servidor**
+Retornado caso ocorra uma falha inesperada no processamento da requisição ou queda na comunicação com o banco de dados.
+*Exemplo:*
+```json
+{
+  "erro": "Erro interno no servidor. Informe o suporte técnico."
+}
+
+```
+
+---
