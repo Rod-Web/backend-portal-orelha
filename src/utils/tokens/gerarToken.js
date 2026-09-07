@@ -1,5 +1,5 @@
 import jsonwebtoken from "jsonwebtoken";
-import { segredoJwt } from "../config/credenciais.js";
+import { segredoJwt } from "../../config/credenciais.js";
 
 export function gerarAccessToken(id, tipo_usuario) {
 

@@ -1,6 +1,6 @@
 import { repositoryBuscarUsuarioPorCampo } from "../repository/usuario.js";
 import { compararSenha } from "../utils/compararSenhaEncriptografa.js";
-import { gerarAccessToken, gerarRefreshToken } from "../utils/gerarToken.js";
+import { gerarAccessToken, gerarRefreshToken } from "../utils/tokens/gerarToken.js";
 
 export async function serviceLogar(cpf, senha) {
     // Normalizar CPF
