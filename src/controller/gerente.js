@@ -8,11 +8,7 @@ export async function controllerGerente(req, res, next) {
         idade: req.body.idade,
         senha: req.body.senha,
         telefone: req.body.telefone,
-        email: req.body.email,
-        endereco: {
-          cep: req.body.endereco.cep,
-          numero: req.body.endereco.numero,
-        },
+        email: req.body.email
       };
 
       const nomeFuncionario = await serviceInserirFuncionario(dados);

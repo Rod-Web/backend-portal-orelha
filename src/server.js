@@ -10,6 +10,7 @@ import { route_refresh } from './routes/refresh.js'
 import { route_gerente } from './routes/gerente.js';
 
 import { middlewaresError } from './middlwares/validacoes/error/erroGlobal.js';
+import { route_authMe } from './routes/auth.js';
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.use(express.json());
 app.use(
   cors({
     // definir rotas
-    origin: "http://127.0.0.1:5500",
+    origin: ["http://127.0.0.1:5500", "https://portalorelhafront.vercel.app"],
     credentials: true,
   }),
 );
@@ -28,6 +29,7 @@ app.use(
 app.use('/cliente', route_cliente);
 app.use('/login', route_login);
 app.use('/auth', route_refresh);
+app.use('/auth', route_authMe);
 app.use("/rotasprivadas/gerente", route_gerente);
 
 app.use(middlewaresError)

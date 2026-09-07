@@ -5,6 +5,15 @@ import { validarSenha } from "./dados/senha.js";
 import { validarTelefone } from "./dados/telefone.js";
 import { validarEmail} from "./dados/email.js"
 
+export function validarCookie(req, res, next) {
+  const access_token = req.cookies.accessToken;
+  if (!access_token) {
+    return res.status(401).json({ erro: "O cookie access não existe." });
+  }
+
+  next();
+}
+
 export function dadosUsuario(req, res, next) {
     const dados = {
         cpf: req.body.cpf,

@@ -1,5 +1,5 @@
 import express from 'express';
-import { validarCookie } from '../middlwares/validacoes/dadosGerente.js';
+import { validarCookie } from '../middlwares/validacoes/dadosUsuario.js';
 import { confirmarPermissoesGerente } from '../middlwares/autenticacao/permissoes.js';
 import { dadosUsuario } from '../middlwares/validacoes/dadosUsuario.js';
 import { controllerGerente } from '../controller/gerente.js'
