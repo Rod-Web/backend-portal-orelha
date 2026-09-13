@@ -4,7 +4,7 @@ export async function controllerLogin(req, res, next) {
     try {
         const {cpf, senha} = req.body;
         const {tokens, tipo_usuario} = await serviceLogar(cpf, senha);
-        console.log(tokens + "oi")
+        console.log(tokens.accessToken + "oi" + tokens.refreshToken)
         res
         .cookie("accessToken", tokens.accessToken, {
             httpOnly: true,
