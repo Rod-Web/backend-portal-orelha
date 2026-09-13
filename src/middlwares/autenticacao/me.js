@@ -1,3 +1,4 @@
+import {validarAccess} from '../../utils/tokens/validarToken.js';
 
 export function autenticarMe(req, res, next) {
     const access_token = req.cookies.accessToken;
@@ -7,7 +8,6 @@ export function autenticarMe(req, res, next) {
           if (accessTokenInfo.tipo_usuario === "gerente") {
             return next();
           }
-
           return res
             .status(403)
             .json({

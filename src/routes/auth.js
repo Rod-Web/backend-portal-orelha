@@ -1,11 +1,14 @@
 import express from 'express';
 
-import { validarCookie } from '../middlwares/validacoes/dadosUsuario.js';
-import {autenticarMe} from '../middlwares/autenticacao/me.js'
+import { validarAccessMiddlware } from '../middlwares/validacoes/dadosUsuario.js';
+import { autenticar } from '../middlwares/autenticacao/autenticar.js'
+import { controllerTipoUsuario } from '../controller/autenticar.js';
 
 export const route_authMe = express.Router();
 
-route_authMe.get('/me', validarCookie, autenticarMe
-    // validar o token
-    //
+route_authMe.get(
+  "/me",
+  validarAccessMiddlware,
+  autenticar,
+  controllerTipoUsuario,
 );

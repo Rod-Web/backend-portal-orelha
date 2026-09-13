@@ -5,10 +5,12 @@ import { validarSenha } from "./dados/senha.js";
 import { validarTelefone } from "./dados/telefone.js";
 import { validarEmail} from "./dados/email.js"
 
-export function validarCookie(req, res, next) {
+export function validarAccessMiddlware(req, res, next) {
   const access_token = req.cookies.accessToken;
   if (!access_token) {
-    return res.status(401).json({ erro: "O cookie access não existe." });
+    return res
+      .status(401)
+      .json({ erro: "Cookie do access token não encontrado." });
   }
 
   next();
