@@ -1,3 +1,5 @@
+## FALTA ADICIONAR A ENDPOINT DE AUTH/ME, ADICIONAR NO SUMÁRIO A ENDOPINT DE CADASTRAR FUNCIONÁRIO
+
 # 📖 Documentação da API - Portal Orelha
 
 Bem-vindo à documentação oficial da API do **Portal Orelha**. Este documento detalha os endpoints disponíveis para a comunicação com o back-end da aplicação, descrevendo as rotas, regras de negócio, parâmetros exigidos e as respostas esperadas.
@@ -248,9 +250,8 @@ Responsável por interceptar o cookie `refreshToken` do usuário, validá-lo e g
 **💻 Exemplo de Requisição (Front-end HTTP)**
 
 ```http
-POST /auth/refresh HTTP/1.1
-Host: backend-portal-orelha.onrender.com
-Cookie: refreshToken=eyJhbGciOiJIUzI1NiIsInR5c...
+
+credentials: "include"
 
 ```
 
