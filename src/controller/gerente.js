@@ -1,6 +1,6 @@
 import { serviceInserirFuncionario } from "../service/gerente.js";
 
-export async function controllerGerente(req, res, next) {
+export async function controllerInserirFuncionario(req, res, next) {
     try {
       const dados = {
         cpf: req.body.cpf,

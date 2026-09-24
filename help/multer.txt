@@ -1,0 +1,28 @@
+1. Primeiro: o que é o Multer?
+
+O Multer é um middleware do Node/Express para receber arquivos enviados através de multipart/form-data.
+
+O Multer:
+
+✅ recebe o arquivo
+✅ interpreta multipart/form-data
+✅ disponibiliza o arquivo para o Express
+✅ pode armazená-lo temporariamente
+✅ permite filtros e limites
+
+
+multer.single("imagem")
+
+2. .single()
+
+single significa:
+
+"Essa rota vai receber apenas 1 arquivo."
+
+3. "imagem"
+
+Esse é o ponto mais importante.
+
+upload.single("imagem")
+
+O "imagem" precisa ser o nome do campo que o Front envia dentro do FormData.

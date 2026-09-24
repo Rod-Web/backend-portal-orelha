@@ -8,9 +8,10 @@ import { route_cliente } from './routes/cliente.js';
 import { route_login } from './routes/login.js';
 import { route_refresh } from './routes/refresh.js'
 import { route_gerente } from './routes/gerente.js';
+import { route_authMe } from "./routes/auth.js";
+import { route_pet } from "./routes/pet.js"
 
 import { middlewaresError } from './middlwares/validacoes/error/erroGlobal.js';
-import { route_authMe } from './routes/auth.js';
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(express.json());
 app.use(
   cors({
     // definir rotas
-    origin: ["http://127.0.0.1:5500", "https://portalorelhafront.vercel.app"],
+    origin: ["http://127.0.0.1:5500", "https://portalorelhafront.vercel.app", "https://frontend-portal-orelha.vercel.app"],
     credentials: true,
   }),
 );
@@ -31,6 +32,7 @@ app.use('/login', route_login);
 app.use('/auth', route_refresh);
 app.use('/rotasprivadas', route_authMe);
 app.use("/rotasprivadas/gerente", route_gerente);
+app.use("/", route_pet);
 
 app.use(middlewaresError)
 

@@ -1,4 +1,4 @@
-import {validarCPFMatematicamente} from '../../../utils/validacoes/validacaoCPFMatematicamente.js'
+import {validarCPFMatematicamente} from '../../../../utils/validacoes/validacaoCPFMatematicamente.js'
 
 export function validarCPF(cpf) {
 

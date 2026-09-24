@@ -1,5 +1,5 @@
-import {validarCPF} from './dados/cpf.js'
-import { validarSenha } from './dados/senha.js';
+import {validarCPF} from './dados/pessoa/cpf.js'
+import { validarSenha } from './dados/pessoa/senha.js';
 
 export function dadosLogin(req, res, next) {
 

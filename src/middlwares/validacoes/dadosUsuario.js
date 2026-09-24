@@ -1,9 +1,9 @@
-import { validarCPF } from "./dados/cpf.js";
-import { validarNome } from "./dados/nome.js"
-import { validarIdade} from "./dados/idade.js"
-import { validarSenha } from "./dados/senha.js";
-import { validarTelefone } from "./dados/telefone.js";
-import { validarEmail} from "./dados/email.js"
+import { validarCPF } from "./dados/pessoa/cpf.js";
+import { validarNome } from "./dados/global/nome.js"
+import { validarIdade} from "./dados/pessoa/idade.js"
+import { validarSenha } from "./dados/pessoa/senha.js";
+import { validarTelefone } from "./dados/pessoa/telefone.js";
+import { validarEmail} from "./dados/pessoa/email.js"
 
 export function validarAccessMiddlware(req, res, next) {
   const access_token = req.cookies.accessToken;
