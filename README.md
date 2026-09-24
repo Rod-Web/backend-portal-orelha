@@ -191,7 +191,8 @@ Retornado quando as credenciais estão corretas.<br>
 
 ```json
 {
-  "mensagem": "Login efetuado com sucesso."
+  "mensagem": "Login efetuado com sucesso.",
+  "tipo_usuario": "cliente"
 }
 
 ```
