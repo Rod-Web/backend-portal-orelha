@@ -19,14 +19,13 @@ export function validarIdadeNumerica(idadeNumerica) {
 }
 
 export function validarGrandezaIdade(grandeza) {
-    if (!grandeza) {
+    if (!grandeza || grandeza.trim() === "") {
         return "É obrigatório informar a grandeza da idade";
     }
 
     // Service
-    if (!["meses", "anos"].includes(grandeza)) {
-        return "A idade deve ser meses ou anos";
+    if (!["dias", "semanas", "meses", "anos"].includes(grandeza.trim().toLowerCase())) {
+        return "A idade deve ser dias, semanas, meses ou anos";
     }
-
     return null;
 }

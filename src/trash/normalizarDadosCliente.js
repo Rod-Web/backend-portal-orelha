@@ -1,4 +1,4 @@
-import { normalizarDadosUsuario } from "./normalizarDadosUsuario.js";
+import { normalizarDadosUsuario } from "../utils/normalizacoes/normalizarDadosUsuario.js";
 
 export function normalizarDadosCliente(
   cpfDesnormalizado,

@@ -1,7 +1,7 @@
 
 export function validarDescricao(descricao) {
 
-        if (descricao == null || descricao.trim() === "") {
+        if (!descricao || descricao.trim() === "") {
           return "É obrigatório inserir uma descrição";
         }
 

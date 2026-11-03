@@ -4,10 +4,9 @@ import cors from 'cors';
 
 import { testarConexao } from './config/conexao.js';
 
-import { route_cliente } from './routes/cliente.js';
 import { route_login } from './routes/login.js';
 import { route_refresh } from './routes/refresh.js'
-import { route_gerente } from './routes/gerente.js';
+import { route_administrador } from './routes/administrador.js';
 import { route_authMe } from "./routes/auth.js";
 import { route_pet } from "./routes/pet.js"
 
@@ -22,22 +21,38 @@ app.use(express.json());
 app.use(
   cors({
     // definir rotas
-    origin: ["http://127.0.0.1:5500", "https://portalorelhafront.vercel.app", "https://frontend-portal-orelha.vercel.app"],
+    origin: ["http://localhost:5501", "https://portalorelhafront.vercel.app", "https://frontend-portal-orelha.vercel.app"],
     credentials: true,
   }),
 );
 
-app.use('/cliente', route_cliente);
 app.use('/login', route_login);
 app.use('/auth', route_refresh);
 app.use('/rotasprivadas', route_authMe);
-app.use("/rotasprivadas/gerente", route_gerente);
+app.use("/rotasprivadas/administrador", route_administrador);
 app.use("/", route_pet);
 
 app.use(middlewaresError)
 
 app.get("/", (req, res)=> {
     res.send("Backend rodando.");    
+});
+
+app.post("/logout", (req, res) => {
+  res
+  .clearCookie("accessToken", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    path: "/rotasprivadas",   // ← mesmo path do res.cookie
+  })
+  .clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    path: "/auth/refresh",    // ← mesmo path do res.cookie
+  })
+  .status(200).end();
 });
 
 app.listen(3000, async ()=> {

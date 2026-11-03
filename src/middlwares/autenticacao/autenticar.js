@@ -8,6 +8,7 @@ export function autenticar(req, res, next) {
     if (typeof accessTokenInfo !== "string") {
 
         req.usuario = accessTokenInfo.tipo_usuario
+        req.nomeUsuario = accessTokenInfo.nomeUsuario
         return next();
 
     };

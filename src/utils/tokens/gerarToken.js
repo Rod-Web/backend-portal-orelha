@@ -1,19 +1,20 @@
 import jsonwebtoken from "jsonwebtoken";
 import { segredoJwt } from "../../config/credenciais.js";
 
-export function gerarAccessToken(id, tipo_usuario) {
+export function gerarAccessToken(id, nomeUsuario) {
 
     return jsonwebtoken.sign(
-        {id: id, tipo_usuario: tipo_usuario}, 
+        // colocar tipo_usuario e nome  
+        {id: id, nomeUsuario: nomeUsuario, tipo_usuario: "admin"}, 
         segredoJwt().access_token, 
         {expiresIn: "15m"}
     );
 
 };
 
-export function gerarRefreshToken(id, tipo_usuario) {
+export function gerarRefreshToken(id, nomeUsuario) {
     return jsonwebtoken.sign(
-        {id: id, tipo_usuario: tipo_usuario},
+        {id: id, nomeUsuario: nomeUsuario, tipo_usuario: "admin"},
         segredoJwt().refresh_token,
         {expiresIn: "7d"}
     )

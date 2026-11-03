@@ -4,11 +4,17 @@ configDotenv();
 
 export function bancoDeDados() {
     const dados = {
+        usuario: "root",
+        database: "testeTCC",
+        host: "127.0.0.1",
+        porta: 3306,
+        senha: "1234"
+        /*
         usuario: process.env.USUARIO_BANCO_DE_DADOS,
         database: process.env.DATABASE_BANCO_DE_DADOS,
         host: process.env.HOST_BANCO_DE_DADOS,
         porta: process.env.PORTA_BANCO_DE_DADOS,
-        senha: process.env.SENHA_BANCO_DE_DADOS
+        senha: process.env.SENHA_BANCO_DE_DADOS */
     }
 
     return dados;

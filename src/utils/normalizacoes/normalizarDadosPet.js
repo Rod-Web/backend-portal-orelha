@@ -1,51 +1,56 @@
 export function normalizarDadosPet(
-    img,
-    nome,
-    descricao,
-    peso,
-    raca,
-    idadeNumerica,
-    grandezaIdade,
-    genero,
-    tipo_pet,
+  img,
+  nome,
+  idade,
+  grandeza_idade,
+  especie,
+  peso,
+  raca,
+  sexo,
+  descricao,
 ) {
-  
-    //NORMALIZAÇÃO
+  //NORMALIZAÇÃO
+  function normalizacaoPadrao(word) {
+    // Limpa os espaços e deixa tudo minúsculo
+    let limpa = word.trim().replace(/\s+/g, " ").toLowerCase();
 
-    function normalizacaoPadrao(word) {
+    // Retorna apenas a primeira letra do parágrafo maiúscula
+    return limpa.charAt(0).toUpperCase() + limpa.slice(1);
+  }
 
-            word = word.trim().replace(/\s+/g, " ").toLowerCase();
+  nome = normalizacaoPadrao(nome).replace(/\b\w/g, (letra) =>
+    letra.toUpperCase(),
+  ); // Primeira letra de cada palavra maiuscúla
 
-            return word.charAt(0).toUpperCase() + word.slice(1);
+  idade = Number(idade);
 
-    }
+  grandeza_idade = normalizacaoPadrao(grandeza_idade);
 
+  especie = normalizacaoPadrao(especie);
+  especie =
+    especie === "Cachorro"
+      ? (especie = "CACHORRO")
+      : especie === "Gato"
+        ? (especie = "GATO")
+        : especie;
 
-    nome = normalizacaoPadrao(nome)
-        .replace(/\b\w/g, (letra) =>
-            letra.toUpperCase(),
-        ); // Primeira letra de cada palavra maiuscúla
+  peso = Number(peso);
 
+  raca = raca.trim().replace(/\s+/g, " ");
 
-    descricao = normalizacaoPadrao(descricao);
-    raca = raca.trim().replace(/\s+/g, " ");
-    grandezaIdade = normalizacaoPadrao(grandezaIdade);
-    genero = normalizacaoPadrao(genero);
-    tipo_pet = normalizacaoPadrao(tipo_pet);
+  sexo = normalizacaoPadrao(sexo);
 
-    
-    peso = Number(peso);
+  descricao = normalizacaoPadrao(descricao);
 
-    idadeNumerica = Number(idadeNumerica);
   return {
     img,
     nome,
-    descricao,
+    idade,
+    grandeza_idade,
+    especie,
     peso,
     raca,
-    idadeNumerica,
-    grandezaIdade,
-    genero,
-    tipo_pet
+    sexo,
+    descricao,
   };
 }

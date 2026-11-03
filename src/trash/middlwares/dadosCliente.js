@@ -1,5 +1,5 @@
-import { validarCEP } from "./dados/endereco/cep.js"
-import { validarNumero } from "./dados/endereco/numero.js"
+import { validarCEP } from "../../middlwares/validacoes/dados/endereco/cep.js"
+import { validarNumero } from "../../middlwares/validacoes/dados/endereco/numero.js"
 
 export function dadosCliente(req, res, next) {
 

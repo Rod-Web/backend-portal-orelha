@@ -1,4 +1,4 @@
-import {pool} from '../config/conexao.js'
+import {pool} from '../../config/conexao.js'
 
 export async function repositoryCadastrarCliente(dados) {
 

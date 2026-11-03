@@ -1,11 +1,10 @@
 export function normalizarDadosUsuario(
   cpf,
   nome,
-  idade,
   email,
   senha,
-  telefone,
 ) {
+
   //NORMALIZAÇÃO
   cpf = cpf.trim().replace(/\D/g, "");
 
@@ -17,14 +16,11 @@ export function normalizarDadosUsuario(
 
   email = email.trim();
 
-  telefone = telefone.trim().replace(/\D/g, "");
 
   return {
     cpf,
     nome,
-    idade,
     email,
     senha,
-    telefone
   };
 }

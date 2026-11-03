@@ -1,13 +1,13 @@
-import { normalizarDadosCliente } from '../utils/normalizacoes/normalizarDadosCliente.js';
-import { idadeMinima } from '../utils/idadeMinima.js';
-import { validarSenha } from '../utils/validacoes/validarSenha.js';
+import { normalizarDadosCliente } from '../../utils/normalizacoes/normalizarDadosCliente.js';
+import { idadeMinima } from '../../utils/idadeMinima.js';
+import { validarSenha } from '../../utils/validacoes/validarSenha.js';
 
-import { buscarInfosViaCep } from '../APIs/buscarInfosViaCep.js';
+import { buscarInfosViaCep } from '../../APIs/buscarInfosViaCep.js';
 
-import { gerarHash } from "../utils/gerarHash.js";
+import { gerarHash } from "../../utils/gerarHash.js";
 
-import { repositoryBuscarUsuarioPorCampo } from '../repository/usuario.js';
-import {repositoryCadastrarCliente} from '../repository/cliente.js'
+import { repositoryBuscarUsuarioPorCampo } from '../../repository/usuario.js';
+import {repositoryCadastrarCliente} from '../../repository/cliente.js'
 
 export async function serviceInserirCliente(dados) {
   // NORMALIZAÇÂO

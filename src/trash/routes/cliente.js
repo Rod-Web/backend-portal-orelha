@@ -1,8 +1,8 @@
 import express from 'express';
 
 //Middlwares
-import {dadosUsuario} from '../middlwares/validacoes/dadosUsuario.js'
-import {dadosCliente} from '../middlwares/validacoes/dadosCliente.js'
+import {dadosUsuario} from '../../middlwares/validacoes/dadosUsuario.js'
+import {dadosCliente} from '../../middlwares/validacoes/dadosCliente.js'
 
 //Controller
 import { controllerInserirCliente } from '../controller/cliente.js';

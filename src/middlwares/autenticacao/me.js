@@ -5,7 +5,7 @@ export function autenticarMe(req, res, next) {
     const accessTokenInfo = validarAccess(access_token);
 
         if (typeof accessTokenInfo !== "string") {
-          if (accessTokenInfo.tipo_usuario === "gerente") {
+          if (accessTokenInfo.tipo_usuario === "admin") {
             return next();
           }
           return res

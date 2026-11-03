@@ -1,4 +1,4 @@
-import {serviceInserirCliente} from '../service/cliente.js'
+import {serviceInserirCliente} from '../../service/cliente.js'
 
 export async function controllerInserirCliente(req, res, next) {
     try {
