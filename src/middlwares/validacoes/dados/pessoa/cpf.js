@@ -3,7 +3,7 @@ import {validarCPFMatematicamente} from '../../../../utils/validacoes/validacaoC
 export function validarCPF(cpf) {
 
   // Validar se existe
-  if (!cpf || !cpf.trim()) return "O CPF não foi informado";
+  if (!cpf || cpf == undefined || !cpf.trim()) return "O CPF não foi informado";
 
   cpf = cpf.trim();
 

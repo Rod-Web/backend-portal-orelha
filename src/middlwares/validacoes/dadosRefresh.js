@@ -1,7 +1,7 @@
 
 export function dadosRefresh(req, res, next) {
     const refresh = req.cookies.refreshToken;
-    if(!refresh) {
+    if(!refresh || refresh == undefined) {
         return res
           .status(401)
           .json({ erro: "Cookie do refresh token não encontrado." });

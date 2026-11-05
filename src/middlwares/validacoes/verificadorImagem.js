@@ -1,6 +1,8 @@
 import { validarImg, validarImgUrl } from "./dados/global/img.js";
 
 export function verificarImagem(req, res, next) {
+
+  
   if (req.body.imagemUrl) {
     const erro = validarImgUrl(req.body.imagemUrl);
 

@@ -1,7 +1,7 @@
 
 export function validarDescricao(descricao) {
 
-        if (!descricao || descricao.trim() === "") {
+        if (!descricao || descricao == undefined || descricao.trim() === "") {
           return "É obrigatório inserir uma descrição";
         }
 
@@ -13,7 +13,7 @@ export function validarDescricao(descricao) {
           return "A descrição deve possuir no mínimo 10 caracteres";
         }
 
-        if (descricao.length > 500) {
+        if (descricao.length > 1000) {
           return "A descrição deve possuir no máximo 1000 caracteres";
         }
 

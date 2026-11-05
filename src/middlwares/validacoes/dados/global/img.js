@@ -33,7 +33,7 @@ export function uploadImagem(req, res, next) {
 
 export function validarImg(img) { // img = req.file
 
-    if(img == null) return "É obrigatório inserir uma imagem"
+    if(img == null || img == undefined) return "É obrigatório inserir uma imagem"
         
     return null
       
@@ -41,7 +41,7 @@ export function validarImg(img) { // img = req.file
 
 export function validarImgUrl(imgUrl) { // img = req.body.imagemUrl
 
-  if(imgUrl == null) return "É obrigatório inserir a URL da imagem (Erro ao capturar a URL já existente, reenvie a imagem)"
+  if(imgUrl == null || imgUrl == undefined) return "É obrigatório inserir a URL da imagem (Erro ao capturar a URL já existente, reenvie a imagem)"
 
   //verificar se a url é valida
   const urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/;

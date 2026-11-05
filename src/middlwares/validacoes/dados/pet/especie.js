@@ -1,7 +1,7 @@
 export function validarEspecie(especie) {
   
 
-  if (!especie || especie === null || especie.trim() === "") {
+  if (!especie || especie === undefined || especie.trim() === "") {
     return "É obrigatório inserir a espécie do pet";
   }
 

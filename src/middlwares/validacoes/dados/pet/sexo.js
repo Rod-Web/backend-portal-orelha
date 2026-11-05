@@ -1,5 +1,5 @@
 export function validarSexo(sexo) {
-  if (!sexo || sexo.trim() === "") {
+  if (!sexo || sexo == undefined || sexo.trim() === "") {
     return "É obrigatório inserir o sexo";
   }
 

@@ -1,5 +1,5 @@
 export function validarStatus(status) {
-    if (status == null || status === "") {
+    if (status == null || status == undefined || status === "") {
         return "É obrigatório inserir um status";
     }
 

@@ -1,5 +1,5 @@
 export function validarRaca(raca) {
-  if (!raca || raca.trim() === "") {
+  if (!raca || raca == undefined || raca.trim() === "") {
     return "É obrigatório inserir a raça";
   }
 

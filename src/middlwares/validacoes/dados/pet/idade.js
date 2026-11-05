@@ -1,6 +1,6 @@
 
 export function validarIdadeNumerica(idadeNumerica) {
-    if (idadeNumerica == null || idadeNumerica === "") {
+    if (idadeNumerica == null || idadeNumerica == undefined || idadeNumerica === "") {
         return "É obrigatório inserir a idade";
     }
 
@@ -19,7 +19,7 @@ export function validarIdadeNumerica(idadeNumerica) {
 }
 
 export function validarGrandezaIdade(grandeza) {
-    if (!grandeza || grandeza.trim() === "") {
+    if (!grandeza || grandeza == undefined || grandeza.trim() === "") {
         return "É obrigatório informar a grandeza da idade";
     }
 

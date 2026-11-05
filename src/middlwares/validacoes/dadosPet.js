@@ -1,11 +1,11 @@
 import { validarId} from "./dados/global/id.js"
 import { validarNome } from "./dados/global/nome.js";
-import { validarDescricao } from "./dados/pet/descricao.js";
+import { validarDescricao } from "./dados/global/descricao.js";
 import { validarPeso } from "./dados/pet/peso.js";
 import { validarRaca } from "./dados/pet/raca.js";
 import {
   validarIdadeNumerica,
-  validarGrandezaIdade,
+  validarGrandezaIdade
 } from "./dados/pet/idade.js";
 import { validarSexo } from "./dados/pet/sexo.js";
 import { validarEspecie } from "./dados/pet/especie.js";
@@ -22,6 +22,13 @@ export function validarIdPet(req, res, next) {
 }
 
 export function dadosPet(req, res, next) {
+
+    if (!req.body) {
+      return res.status(400).json({
+        erro: "O corpo da requisição não foi informado.",
+      });
+    }
+    
   const dados = {
     nome: req.body.nome,
     idade: req.body.unidade_idade,
@@ -51,13 +58,19 @@ export function dadosPet(req, res, next) {
   next();
 }
 
-import { validarCampo } from "./dados/pet/campoBusca.js";
-import { validarValor } from "./dados/pet/valorBusca.js";
+import { validarCampoPet } from "./dados/pet/campoBuscaPet.js";
+import { validarValor } from "./dados/global/valorBusca.js";
 
 export function validarCampoEValorDeBuscaPet(req, res, next) {
+  
+    if (!req.query)
+      return res
+        .status(400)
+        .json({ erro: "Os parametros de busca não foi informado." });
+
   const { campo, valor } = req.query;
 
-  const erro = validarCampo(campo) || validarValor(valor);
+  const erro = validarCampoPet(campo) || validarValor(valor);
 
   if (erro) {
     return res.status(400).json({ erro });
@@ -68,6 +81,7 @@ export function validarCampoEValorDeBuscaPet(req, res, next) {
 
 
 export function validarStatusPet(req, res, next) {
+  
   const { status } = req.body;
 
   const erro = validarStatus(status);

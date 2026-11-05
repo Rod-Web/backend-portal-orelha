@@ -1,4 +1,4 @@
-export function validarCampo(campo) {
+export function validarCampoPet(campo) {
     const camposValidos = [
       "numero_identificacao",
       "nome",

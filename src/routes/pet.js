@@ -13,15 +13,7 @@ import {
 } from "../middlwares/validacoes/dadosPet.js";
 import { verificarImagem } from '../middlwares/validacoes/verificadorImagem.js';
 
-/*
-MUDANÇAS PARA O PET
 
-faço o que? armazenar em dias? e fazer a conversão?
-
-Tipo: Na hora de coletar eu pergunto quantas semanas ou meses possuí, depois com essa informação eu converto para a quantidade de dias, e na hora de apresentar se for mais de 7 dias é 1 semana se for mais que 30 dias é mes se for maior que o ano é em ano 
-
-
-*/
 export const route_pet = express.Router();
 
 route_pet.get('/pet', controllerSelecionarPets);

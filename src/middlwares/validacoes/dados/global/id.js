@@ -1,5 +1,5 @@
 export function validarId(id) {
-    if (id == null || id === "") {
+    if (id == null || id == undefined || id === "") {
           return "É obrigatório inserir um id";
         }
 

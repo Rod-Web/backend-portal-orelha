@@ -15,6 +15,13 @@ export function validarAccessMiddlware(req, res, next) {
 }
 
 export function dadosUsuario(req, res, next) {
+
+      if (!req.body) {
+        return res.status(400).json({
+          erro: "O corpo da requisição não foi informado.",
+        });
+      }
+      
     const dados = {
         cpf: req.body.cpf,
         nome: req.body.nome,

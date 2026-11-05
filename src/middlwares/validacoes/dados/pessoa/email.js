@@ -1,6 +1,6 @@
 export function validarEmail(email) {
 
-  if (!email || !email.trim()) return "Preencha o campo do email.";
+  if (!email  || email == undefined || !email.trim()) return "Preencha o campo do email.";
 
   email = email.trim();
 

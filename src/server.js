@@ -9,6 +9,7 @@ import { route_refresh } from './routes/refresh.js'
 import { route_administrador } from './routes/administrador.js';
 import { route_authMe } from "./routes/auth.js";
 import { route_pet } from "./routes/pet.js"
+import { route_oportunidade } from "./routes/trabalho-voluntario.js"
 
 import { middlewaresError } from './middlwares/validacoes/error/erroGlobal.js';
 
@@ -31,6 +32,7 @@ app.use('/auth', route_refresh);
 app.use('/rotasprivadas', route_authMe);
 app.use("/rotasprivadas/administrador", route_administrador);
 app.use("/", route_pet);
+app.use('/', route_oportunidade);
 
 app.use(middlewaresError)
 

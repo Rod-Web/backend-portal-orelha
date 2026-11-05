@@ -1,7 +1,7 @@
 export function validarNome(nome) {
 
     // Validar se existe
-    if (!nome || !nome.trim()) return "O nome não foi inserido.";
+    if (!nome || nome == undefined || !nome.trim()) return "O nome não foi inserido.";
 
     nome = nome.trim();
 
