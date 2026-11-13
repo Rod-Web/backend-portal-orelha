@@ -3,6 +3,7 @@ import {
   repositoryBuscarTrabalhoVoluntarioPorCampo,
   repositoryBuscarTrabalhoVoluntarioPorId,
   repositoryCadastrarTrabalhoVoluntario,
+  repositoryEditarTrabalhoVoluntario,
   repositoryDeletarTrabalhoVoluntarioPorId,
 } from "../repository/trabalho-voluntario.js";
 
@@ -30,7 +31,6 @@ export async function serviceSelecionarTrabalhoVoluntárioPorCampo(campo, valor)
     return oportunidades;
 };
 
-
 export async function serviceSelecionarTrabalhoVoluntarioPorId(id) {
     
     const [trabalho] = await repositoryBuscarTrabalhoVoluntarioPorId(id);
@@ -50,6 +50,28 @@ export async function serviceInserirTrabalhoVoluntario(dados) {
   if (affectedRows != 1) {
     const erro = new Error(
       "Não foi possivel cadastrar o trabalho voluntário. Entre em contato com o suporte.",
+    );
+    throw erro;
+  }
+
+  return dados.titulo;
+}
+
+export async function serviceEditarTrabalhoVoluntario(id, dados, status) {
+
+  dados.status = status;
+
+  const [trabalho] = await repositoryBuscarTrabalhoVoluntarioPorId(id);
+  if (!trabalho || trabalho.length === 0) {
+    const erro = new Error("Nenhum trabalho voluntário encontrado.");
+    erro.status = 404;
+    throw erro;
+  }
+
+  const affectedRows = await repositoryEditarTrabalhoVoluntario(id, dados);
+  if (affectedRows !== 1) {
+    const erro = new Error(
+      "Não foi possível editar o trabalho voluntário. Tente novamente ou entre em contato com o suporte.",
     );
     throw erro;
   }

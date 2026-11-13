@@ -4,12 +4,14 @@ import {
   controllerSelecionarTrabalhoVoluntarioPorCampo,
   controllerSelecionarTrabalhosVoluntarioPorId,
   controllerInserirTrabalhoVoluntario,
+  controllerEditarTrabalhoVoluntario,
   controllerDeletarTrabalhoVoluntarioPorId
 } from "../controller/trabalho-voluntario.js";
 import {
   validarCampoEValorDeBuscarTrabalhoVoluntario,
   validarIdGeral,
   dadosTrabalhoVoluntario,
+  validarStatusTrabalhoVoluntario,
 } from "../middlwares/validacoes/dadosTrabalhoVoluntario.js";
 import { validarAccessMiddlware } from "../middlwares/validacoes/dadosUsuario.js";
 import { autenticar } from "../middlwares/autenticacao/autenticar.js";
@@ -41,6 +43,17 @@ route_oportunidade.post(
   confirmarPermissoesAdmin,
   dadosTrabalhoVoluntario,
   controllerInserirTrabalhoVoluntario,
+);
+
+route_oportunidade.put(
+  "/rotasprivadas/trabalho-voluntario/:id",
+  validarAccessMiddlware,
+  autenticar,
+  confirmarPermissoesAdmin,
+  validarIdGeral,
+  dadosTrabalhoVoluntario,
+  validarStatusTrabalhoVoluntario,
+  controllerEditarTrabalhoVoluntario
 );
 
 route_oportunidade.delete(

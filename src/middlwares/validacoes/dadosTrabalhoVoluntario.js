@@ -5,6 +5,7 @@ import { validarLocal } from "./dados/trabalho-voluntario/local.js";
 import { validarDataInicio } from "./dados/trabalho-voluntario/dataInicio.js" 
 import { validarJornada } from "./dados/trabalho-voluntario/jornada.js";
 
+import { validarStatus } from "./dados/trabalho-voluntario/status.js";
 export function validarIdGeral(req, res, next) {
   const { id } = req.params;
 
@@ -64,3 +65,14 @@ export function validarCampoEValorDeBuscarTrabalhoVoluntario(req, res, next) {
 
   next();
 }
+
+export function validarStatusTrabalhoVoluntario(req, res, next) {
+  
+  const { status } = req.body;
+
+  const erro = validarStatus(status);
+
+  if (erro) return res.status(400).json({ erro });
+
+  next();
+};

@@ -31,9 +31,28 @@ export async function repositoryCadastrarTrabalhoVoluntario(dados) {
   ];
   const [result] = await pool.execute(query, values);
   return result.affectedRows;
+};
+
+export async function repositoryEditarTrabalhoVoluntario(id, dados) {
+  const { titulo, descricao, local, data_inicio, jornada, status } = dados;
+  const query =
+    "UPDATE oportunidade_voluntariado SET titulo = ?, descricao = ?, local = ?, data_inicio = ?, jornada = ?, status = ? WHERE id = ?";
+  const values = [
+    titulo, 
+    descricao, 
+    local, 
+    data_inicio, 
+    jornada, 
+    status,
+    id,
+  ];
+
+  console.log(status)
+  const [result] = await pool.execute(query, values);
+  return result.affectedRows;
 }
 
 export async function repositoryDeletarTrabalhoVoluntarioPorId(id) {
   const [result] = await pool.execute(`DELETE FROM oportunidade_voluntariado WHERE id = ?`, [id]);
   return result.affectedRows 
-}
+};
