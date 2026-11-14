@@ -17,7 +17,7 @@ import { validarPossuiHabilidadeRelevante } from "./dados/inscricaoTrabalhoVolun
 import { validarEnderecoRegiao } from "./dados/endereco/enderecoRegiao.js";
 
 
-export function dadosInscricao(req, res, next) {
+export function dadosInscricaoVoluntariado(req, res, next) {
 
     if (!req.body) {
       return res.status(400).json({

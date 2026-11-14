@@ -1,7 +1,8 @@
 import { serviceSelecionarTrabalhoVoluntarioPorCampo } from "./trabalho-voluntario.js";
-import { repositoryCadastrarInscricaoTrabalhoVoluntario } from "../repository/inscricao-trabalho-voluntario.js";
 
-export async function serviceInserirInscricaoTrabalhoVoluntario(dados) {
+import { repositoryInserirInscricaoVoluntariado } from "../repository/formulario-voluntariado.js";
+
+export async function serviceInserirInscricaoVoluntariado(dados) {
 
     if (dados.concorda_orientacoes_regras_seguranca !== true || dados.ciente_atividades_responsabilidades !== true) {
         const erro = new Error(
@@ -22,7 +23,7 @@ export async function serviceInserirInscricaoTrabalhoVoluntario(dados) {
         throw erro;
     }
 
-    const affectedRows = await repositoryCadastrarInscricaoTrabalhoVoluntario(dados);
+    const affectedRows = await repositoryInserirInscricaoVoluntariado(dados);
     // VALIDAR SE AS TABELAS SOFRERAM ALTERAÇÕES
     if (affectedRows != 1) {
         const erro = new Error(
@@ -30,8 +31,6 @@ export async function serviceInserirInscricaoTrabalhoVoluntario(dados) {
         );
         throw erro;
     }
-
-
 
     return { mensagem: `Sua inscricao foi realizada com sucesso, aguarde pelo contato da ONG.` };
 

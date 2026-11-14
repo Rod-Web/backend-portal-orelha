@@ -1,7 +1,7 @@
 
 import { pool } from "../config/conexao.js";
 
-export async function repositoryCadastrarSolicitacaoDeAdocao(dados) {
+export async function repositoryInserirSolicitacaoDeAdocao(dados) {
 
     const {
         nome,

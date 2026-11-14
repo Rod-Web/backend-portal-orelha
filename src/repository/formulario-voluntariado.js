@@ -1,7 +1,7 @@
 import { pool } from "../config/conexao.js";
 
 
-export async function repositoryCadastrarInscricaoTrabalhoVoluntario(dados) {
+export async function repositoryInserirInscricaoVoluntariado(dados) {
   console.log(dados)
   const {
     nome,

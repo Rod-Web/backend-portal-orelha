@@ -1,8 +1,9 @@
-import { serviceSelecionarPetsPorCampo } from "../service/pet.js";
-import { repositoryCadastrarSolicitacaoDeAdocao } from "../repository/solicitar-adocao.js";
-import { buscarInfosViaCep } from '../APIs/buscarInfosViaCep.js';
+import { serviceSelecionarPetsPorCampo } from "./pet.js";
+import { buscarInfosViaCep } from "../APIs/buscarInfosViaCep.js";
 
-export async function serviceInserirSolicitacaoDeAdocao(dados) {
+import { repositoryInserirSolicitacaoDeAdocao } from "../repository/formulario-adocao.js";
+
+export async function serviceInserirSolicitacaoAdocao(dados) {
 
     if (dados.compromisso_adocao_responsavel !== true || dados.familia_ciente_concorda !== true) {
         const erro = new Error(
@@ -28,7 +29,7 @@ export async function serviceInserirSolicitacaoDeAdocao(dados) {
         throw erro
     }
 
-    const affectedRows = await repositoryCadastrarSolicitacaoDeAdocao(dados);
+    const affectedRows = await repositoryInserirSolicitacaoDeAdocao(dados);
     // VALIDAR SE AS TABELAS SOFRERAM ALTERAÇÕES
     if (affectedRows != 1) {
         const erro = new Error(

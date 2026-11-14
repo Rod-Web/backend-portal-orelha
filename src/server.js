@@ -10,8 +10,8 @@ import { route_administrador } from './routes/administrador.js';
 import { route_authMe } from "./routes/auth.js";
 import { route_pet } from "./routes/pet.js"
 import { route_oportunidade } from "./routes/trabalho-voluntario.js"
-import { route_solicitarAdocao } from './routes/solicitar-adocao.js';
-import { route_inscricao_trabalho_voluntario } from './routes/inscricao-trabalho-voluntario.js';
+import { route_formularioAdocao } from "./routes/formulario-adocao.js";
+import { route_formularioVoluntariado } from "./routes/formulario-voluntariado.js";
 
 import { middlewaresError } from './middlwares/validacoes/error/erroGlobal.js';
 
@@ -35,8 +35,8 @@ app.use('/rotasprivadas', route_authMe);
 app.use("/rotasprivadas/administrador", route_administrador);
 app.use("/", route_pet);
 app.use('/', route_oportunidade);
-app.use('/', route_solicitarAdocao);
-app.use("/", route_inscricao_trabalho_voluntario)
+app.use("/", route_formularioAdocao);
+app.use("/", route_formularioVoluntariado);
 
 app.use(middlewaresError)
 

@@ -1,6 +1,6 @@
-import { serviceInserirSolicitacaoDeAdocao } from "../service/solicitar-adocao.js";
+import { serviceInserirSolicitacaoAdocao } from "../service/formulario-adocao.js";
 
-export async function controllerIncluirSolicitacaoAdocao(req, res, next) {
+export async function controllerInserirSolicitacaoAdocao(req, res, next) {
     try {
         const dados = {
             nome: req.body.nome_completo,
@@ -27,7 +27,7 @@ export async function controllerIncluirSolicitacaoAdocao(req, res, next) {
             id_pet: req.body.id_pet
         };
 
-        const resultado = await serviceInserirSolicitacaoDeAdocao(dados)
+        const resultado = await serviceInserirSolicitacaoAdocao(dados)
         return res.status(201).json(resultado)
 
     } catch (err) {

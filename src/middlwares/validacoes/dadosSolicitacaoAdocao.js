@@ -22,7 +22,7 @@ import { validarCompromissoAdocaoResponsavel } from "./dados/solicitacaoAdocao/c
 import { validarId } from "./dados/global/id.js";
 
 
-export function dadosSolicitacao(req, res, next) {
+export function dadosSolicitacaoAdocao(req, res, next) {
 
     if (!req.body) {
       return res.status(400).json({
