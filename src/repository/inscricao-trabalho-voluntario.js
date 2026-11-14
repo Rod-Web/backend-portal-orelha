@@ -1,12 +1,13 @@
 import { pool } from "../config/conexao.js";
 
+
 export async function repositoryCadastrarInscricaoTrabalhoVoluntario(dados) {
+  console.log(dados)
   const {
     nome,
     idade,
     email,
-    endereco_completo,
-    cep,
+    endereco_residencial,
     telefone,
     profissao,
     dias_disponiveis,
@@ -50,8 +51,7 @@ export async function repositoryCadastrarInscricaoTrabalhoVoluntario(dados) {
     nome,
     idade,
     email,
-    endereco_completo,
-    cep,
+    endereco_residencial,
     telefone,
     profissao,
     dias_disponiveis,
