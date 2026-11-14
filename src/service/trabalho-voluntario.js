@@ -20,7 +20,7 @@ export async function serviceSelecionarTrabalhosVoluntario() {
     return todosTrabalhos;
 };
 
-export async function serviceSelecionarTrabalhoVoluntárioPorCampo(campo, valor) {
+export async function serviceSelecionarTrabalhoVoluntarioPorCampo(campo, valor) {
 
     const oportunidades = await repositoryBuscarTrabalhoVoluntarioPorCampo(campo, valor);
     if (!oportunidades || oportunidades.length === 0) {

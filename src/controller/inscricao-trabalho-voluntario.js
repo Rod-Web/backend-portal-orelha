@@ -1,4 +1,4 @@
-//import { serviceInserirInscricaoTrabalhoVoluntario } from "../service/inscricao-trabalho-voluntario.js";
+import { serviceInserirInscricaoTrabalhoVoluntario } from "../service/inscricao-trabalho-voluntario.js";
 
 export async function controllerIncluirInscricaoTrabalhoVoluntario(req, res, next) {
     try {
@@ -25,7 +25,7 @@ export async function controllerIncluirInscricaoTrabalhoVoluntario(req, res, nex
         };
 
 
-        //const resultado = await serviceInserirInscricaoTrabalhoVoluntario(dados)
+        const resultado = await serviceInserirInscricaoTrabalhoVoluntario(dados)
         return res.status(201).json(dados)
 
     } catch (err) {

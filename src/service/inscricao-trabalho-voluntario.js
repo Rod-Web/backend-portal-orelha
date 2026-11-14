@@ -1,3 +1,4 @@
+import { serviceSelecionarTrabalhoVoluntarioPorCampo } from "./trabalho-voluntario.js";
 import { repositoryCadastrarInscricaoTrabalhoVoluntario } from "../repository/inscricao-trabalho-voluntario.js";
 
 export async function serviceInserirInscricaoTrabalhoVoluntario(dados) {
@@ -10,13 +11,22 @@ export async function serviceInserirInscricaoTrabalhoVoluntario(dados) {
         throw erro;
     }
 
+    const [oportunidade] = await serviceSelecionarTrabalhoVoluntarioPorCampo(
+        "id",
+        dados.id_oportunidade_voluntario,
+    );
 
+    if (oportunidade.status !== "ABERTA") {
+        const erro = new Error("Oportunidade não disponível");
+        erro.status = 404;
+        throw erro;
+    }
 
     const affectedRows = await repositoryCadastrarInscricaoTrabalhoVoluntario(dados);
     // VALIDAR SE AS TABELAS SOFRERAM ALTERAÇÕES
     if (affectedRows != 1) {
         const erro = new Error(
-            "Não foi possivel realizar sua solicitação. Tente novamente mais tarde ou entre em contato com o suporte.",
+            "Não foi possivel realizar sua inscrição. Tente novamente mais tarde ou entre em contato com o suporte.",
         );
         throw erro;
     }

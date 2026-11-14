@@ -1,87 +1,72 @@
-
 import { pool } from "../config/conexao.js";
 
 export async function repositoryCadastrarInscricaoTrabalhoVoluntario(dados) {
+  const {
+    nome,
+    idade,
+    email,
+    endereco_completo,
+    cep,
+    telefone,
+    profissao,
+    dias_disponiveis,
+    periodos_disponiveis,
+    disponibilidade_durante_jornada,
+    experiencias_anteriores_trabalho_voluntario,
+    possui_habilidade_relevante,
+    possui_experiencia_animais,
+    ciente_atividades_responsabilidades,
+    concorda_orientacoes_regras_seguranca,
+    motivacao_interesse,
+    id_oportunidade_voluntario,
+  } = dados;
 
-    const {
-        nome,
-        idade,
-        email,
-        endereco_completo,
-        cep,
-        telefone,
-        profissao,
-        medidas_seguranca_residencial,
-        comodos_acesso_animal,
-        possui_outros_animais,
-        descricao_animais_existentes,
-        racao_atual,
-        veterinario_responsavel,
-        cuidador_direto,
-        quantidade_pessoas_residencia,
-        familia_ciente_concorda,
-        crianca_convivio,
-        animais_anteriores,
-        descricao_animais_anteriores,
-        rotina_familiar,
-        compromisso_adocao_responsavel,
-        id_pet
-    } = dados;
-
-    const query = `
-        INSERT INTO solicitacao_adocao (
+  const query = `
+        INSERT INTO inscricao_voluntariado (
             nome_completo,
             idade,
             email,
-            endereco_completo,
-            cep,
+            endereco_residencial,
             telefone_contato,
-            profissao,
-            medidas_seguranca_residencial,
-            comodos_acesso_animal,
-            possui_outros_animais,
-            descricao_animais_existentes,
-            racao_atual,
-            veterinario_responsavel,
-            cuidador_direto,
-            quantidade_pessoas_residencia,
-            familia_ciente_concorda,
-            crianca_convivio,
-            animais_anteriores,
-            descricao_animais_anteriores,
-            rotina_familiar,
-            compromisso_adocao_responsavel,
-            id_pet
+            profissao_atual,
+
+            dias_disponiveis,
+            periodos_disponiveis,
+            disponibilidade_durante_jornada,
+
+            experiencias_anteriores_trabalho_voluntario,
+            possui_habilidade_relevante,
+            possui_experiencia_animais,
+            ciente_atividades_responsabilidades,
+            concorda_orientacoes_regras_seguranca,
+            motivacao_interesse,
+
+            id_oportunidade_voluntario
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-    const values = [
-        nome,
-        idade,
-        email,
-        endereco_completo,
-        cep,
-        telefone,
-        profissao,
-        medidas_seguranca_residencial,
-        comodos_acesso_animal,
-        possui_outros_animais,
-        descricao_animais_existentes,
-        racao_atual,
-        veterinario_responsavel,
-        cuidador_direto,
-        quantidade_pessoas_residencia,
-        familia_ciente_concorda,
-        crianca_convivio,
-        animais_anteriores,
-        descricao_animais_anteriores,
-        rotina_familiar,
-        compromisso_adocao_responsavel,
-        id_pet
-    ];
+  const values = [
+    nome,
+    idade,
+    email,
+    endereco_completo,
+    cep,
+    telefone,
+    profissao,
+    dias_disponiveis,
+    periodos_disponiveis,
+    disponibilidade_durante_jornada,
+    experiencias_anteriores_trabalho_voluntario,
+    possui_habilidade_relevante,
+    possui_experiencia_animais,
+    ciente_atividades_responsabilidades,
+    concorda_orientacoes_regras_seguranca,
+    motivacao_interesse,
+    id_oportunidade_voluntario,
+  ];
 
-    const [result] = await pool.execute(query, values);
+  const [result] = await pool.execute(query, values);
 
-    return result.affectedRows;
+  return result.affectedRows;
 }

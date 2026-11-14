@@ -1,6 +1,6 @@
 import {
   serviceSelecionarTrabalhosVoluntario,
-  serviceSelecionarTrabalhoVoluntárioPorCampo,
+  serviceSelecionarTrabalhoVoluntarioPorCampo,
   serviceSelecionarTrabalhoVoluntarioPorId,
   serviceInserirTrabalhoVoluntario,
   serviceEditarTrabalhoVoluntario,
@@ -20,7 +20,7 @@ export async function controllerSelecionarTrabalhosVoluntario(req, res, next) {
 export async function controllerSelecionarTrabalhoVoluntarioPorCampo(req, res, next) {
   try {
     const { campo, valor } = req.query;
-    const oportunidades = await serviceSelecionarTrabalhoVoluntárioPorCampo(campo, valor);
+    const oportunidades = await serviceSelecionarTrabalhoVoluntarioPorCampo(campo, valor);
     res.status(200).json(oportunidades);
   } catch (error) {
     next(error);
