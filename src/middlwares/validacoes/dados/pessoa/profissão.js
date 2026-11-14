@@ -1,13 +1,18 @@
 export function validarProfissao(profissao) {
 
-  if (!profissao || profissao === undefined || !profissao.trim()) {
+  if (!profissao) {
     return "Preencha o campo da profissão.";
+  }
+
+  // Valida se é string ANTES de qualquer manipulação de string
+  if (typeof profissao !== "string") {
+    return "A profissão deve ser uma string.";
   }
 
   profissao = profissao.trim();
 
-  if (typeof profissao !== "string") {
-    return "A profissão deve ser uma string.";
+  if (!profissao) {
+    return "Preencha o campo da profissão.";
   }
 
   // Respeita o limite do banco de dados (VARCHAR(100)) e define um mínimo razoável (2 caracteres)

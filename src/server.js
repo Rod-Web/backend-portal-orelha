@@ -11,6 +11,7 @@ import { route_authMe } from "./routes/auth.js";
 import { route_pet } from "./routes/pet.js"
 import { route_oportunidade } from "./routes/trabalho-voluntario.js"
 import { route_solicitarAdocao } from './routes/solicitar-adocao.js';
+import { route_inscricao_trabalho_voluntario } from './routes/inscricao-trabalho-voluntario.js';
 
 import { middlewaresError } from './middlwares/validacoes/error/erroGlobal.js';
 
@@ -35,6 +36,7 @@ app.use("/rotasprivadas/administrador", route_administrador);
 app.use("/", route_pet);
 app.use('/', route_oportunidade);
 app.use('/', route_solicitarAdocao);
+app.use("/", route_inscricao_trabalho_voluntario)
 
 app.use(middlewaresError)
 

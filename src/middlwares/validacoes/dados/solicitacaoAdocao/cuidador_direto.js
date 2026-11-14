@@ -1,14 +1,14 @@
 export function validarCuidadorDireto(cuidador) {
 
-  if (!cuidador || cuidador === undefined || !cuidador.trim()) {
+  if (!cuidador) {
     return "Preencha o campo do cuidador direto.";
   }
-
-  cuidador = cuidador.trim();
 
   if (typeof cuidador !== "string") {
     return "O cuidador direto deve ser uma string.";
   }
+
+  cuidador = cuidador.trim();
 
   // Respeita o limite exato do banco de dados (VARCHAR(100)) e exige um mínimo de 2 caracteres
   if (cuidador.length < 2 || cuidador.length > 100) {
