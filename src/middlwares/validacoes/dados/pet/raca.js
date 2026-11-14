@@ -1,5 +1,5 @@
 export function validarRaca(raca) {
-  if (!raca || raca == undefined || raca.trim() === "") {
+  if (!raca || raca == undefined) {
     return "É obrigatório inserir a raça";
   }
 
@@ -7,9 +7,11 @@ export function validarRaca(raca) {
     return "A raça deve ser um texto";
   }
 
-  if (raca.length < 2) {
-    return "A raça deve possuir no mínimo 2 caracteres";
-  }
+  if (raca.trim() === "") return "É obrigatório inserir a raça";
+
+    if (raca.length < 2) {
+      return "A raça deve possuir no mínimo 2 caracteres";
+    }
 
   if (raca.length > 100) {
     return "A raça deve possuir no máximo 100 caracteres";

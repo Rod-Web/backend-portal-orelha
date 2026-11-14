@@ -7,9 +7,11 @@ export function validarSexo(sexo) {
     return "O sexo deve ser um texto";
   }
 
-  if (sexo !== "femea" && sexo !== "macho") {
-    return "O sexo deve ser 'femea' ou 'macho'";
-  }
+  if (sexo.trim() === "") return "É obrigatório inserir o sexo";
+
+    if (sexo !== "femea" && sexo !== "macho") {
+      return "O sexo deve ser 'femea' ou 'macho'";
+    }
 
   return null;
 }

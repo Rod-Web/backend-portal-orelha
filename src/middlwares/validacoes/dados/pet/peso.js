@@ -1,5 +1,5 @@
 export function validarPeso(peso) {
-  if (!peso || peso == undefined || peso.trim() === "") {
+  if (!peso || peso == undefined) {
     return "É obrigatório inserir o peso";
   }
 
