@@ -15,7 +15,7 @@ export function validarMedidasSegurancaResidencial(medidas) {
   }
 
   // Alinhado com a mensagem e o comentário: entre 10 e 1000 caracteres
-  if (medidas.length < 10 || medidas.length > 1000) {
+  if (medidas.length < 3 || medidas.length > 1000) {
     return "As medidas de segurança residencial devem ter entre 10 e 1000 caracteres.";
   }
 

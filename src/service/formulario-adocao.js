@@ -4,42 +4,92 @@ import { buscarInfosViaCep } from "../APIs/buscarInfosViaCep.js";
 import { repositoryInserirSolicitacaoDeAdocao } from "../repository/formulario-adocao.js";
 
 export async function serviceInserirSolicitacaoAdocao(dados) {
+  if (
+    dados.compromisso_adocao_responsavel !== true ||
+    dados.familia_ciente_concorda !== true
+  ) {
+    const erro = new Error(
+      "Não foi possível prosseguir com a solicitação de adoção. Para garantir o bem-estar do animal, é necessário que você e sua família estejam cientes e de acordo com as responsabilidades envolvidas na adoção.",
+    );
+    erro.status = 422;
+    throw erro;
+  }
 
-    if (dados.compromisso_adocao_responsavel !== true || dados.familia_ciente_concorda !== true) {
-        const erro = new Error(
-            "Não foi possível prosseguir com a solicitação de adoção. Para garantir o bem-estar do animal, é necessário que você e sua família estejam cientes e de acordo com as responsabilidades envolvidas na adoção.",
+  /*
+        1. Pets Atuais              (possui_outros_animais)
+            1. Sem descrição        (descricao_animais_existentes)
+            2. Sem ração            (racao_atual)
+            3. Sem veterinario      (veterinario_responsavel)
+        2. Pet passado              (animais_anteriores)
+            1. Sem descrição        (descricao_animais_anteriores)
+    */
+  // Pets atuais
+  if (dados.possui_outros_animais !== true) {
+    dados.descricao_animais_existentes = null;
+    dados.racao_atual = null;
+    dados.veterinario_responsavel = null;
+  }
+
+  // Pets anteriores
+  if (dados.animais_anteriores !== true) {
+    dados.descricao_animais_anteriores = null;
+  }
+
+  // Validação dos pets atuais
+  if (dados.possui_outros_animais === true) {
+    if (
+      !dados.descricao_animais_existentes ||
+      !dados.racao_atual ||
+      !dados.veterinario_responsavel
+    ) {
+      const erro = new Error(
+        "Está faltando o campo da descricao do seu pet atual ou a ração dele ou a do veterinário."
         );
-        erro.status = 422
-        throw erro;
+      erro.status = 400;
+      throw erro;
     }
+  }
 
-    const [pet] = await serviceSelecionarPetsPorCampo("numero_identificacao", dados.id_pet);
-
-    if (pet.status !== "DISPONIVEL") {
-        const erro = new Error("Pet não disponível")
-        erro.status = 404
-        throw erro
+  // Validação dos pets anteriores
+  if (dados.animais_anteriores === true) {
+    if (!dados.descricao_animais_anteriores) {
+      const erro = new Error(
+        "Está faltando o campo da descricao do seu pet antigo.",
+      );
+      erro.status = 400;
+      throw erro;
     }
+  }
 
-    // VALIDAR SE O CEP EXISTE
-    const cepinfos = await buscarInfosViaCep(dados.cep)
-    if (cepinfos.erro) {
-        const erro = new Error("O CEP informado não existe")
-        erro.status = 400
-        throw erro
-    }
+  const [pet] = await serviceSelecionarPetsPorCampo(
+    "numero_identificacao",
+    dados.id_pet,
+  );
 
-    const affectedRows = await repositoryInserirSolicitacaoDeAdocao(dados);
-    // VALIDAR SE AS TABELAS SOFRERAM ALTERAÇÕES
-    if (affectedRows != 1) {
-        const erro = new Error(
-            "Não foi possivel realizar sua solicitação. Tente novamente mais tarde ou entre em contato com o suporte.",
-        );
-        throw erro;
-    }
+  if (pet.status !== "DISPONIVEL") {
+    const erro = new Error("Pet não disponível");
+    erro.status = 404;
+    throw erro;
+  }
 
+  // VALIDAR SE O CEP EXISTE
+  const cepinfos = await buscarInfosViaCep(dados.cep);
+  if (cepinfos.erro) {
+    const erro = new Error("O CEP informado não existe");
+    erro.status = 400;
+    throw erro;
+  }
 
+  const affectedRows = await repositoryInserirSolicitacaoDeAdocao(dados);
+  // VALIDAR SE AS TABELAS SOFRERAM ALTERAÇÕES
+  if (affectedRows != 1) {
+    const erro = new Error(
+      "Não foi possivel realizar sua solicitação. Tente novamente mais tarde ou entre em contato com o suporte.",
+    );
+    throw erro;
+  }
 
-    return { mensagem: `Sua solicitação foi realizada com sucesso, aguarde pelo contato da ONG.` };
-
+  return {
+    mensagem: `Sua solicitação foi realizada com sucesso, aguarde pelo contato da ONG.`,
+  };
 }
