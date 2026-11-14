@@ -26,7 +26,7 @@ export async function controllerIncluirInscricaoTrabalhoVoluntario(req, res, nex
 
 
         const resultado = await serviceInserirInscricaoTrabalhoVoluntario(dados)
-        return res.status(201).json(dados)
+        return res.status(201).json(resultado)
 
     } catch (err) {
         next(err)
