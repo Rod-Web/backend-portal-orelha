@@ -24,8 +24,6 @@ export async function repositoryCadastrarCliente(dados) {
 
     const affectedRow = {usuario: usuario.affectedRows, endereco: endereco.affectedRows, cliente: cliente.affectedRows} 
 
-    console.log(affectedRow)
-
     return affectedRow
 
 

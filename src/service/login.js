@@ -27,7 +27,6 @@ export async function serviceLogar(cpf, senha) {
   const validarSenha = await compararSenha(senha, senhaCriptografada);
 
   if (!validarSenha) {
-    console.log("Senha incorreta");
     const erro = new Error("Usuário ou senha incorreto.");
     erro.status = 401;
     throw erro;

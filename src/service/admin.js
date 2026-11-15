@@ -15,8 +15,6 @@ export async function serviceInserirAdmin(dados) {
     dados.senha
   );
   
-  console.log("Validando dados do usuário...");
-
   // VALIDAR SE O CPF É UNICO
   let campo = "cpf"
   const cpf = dados.cpf

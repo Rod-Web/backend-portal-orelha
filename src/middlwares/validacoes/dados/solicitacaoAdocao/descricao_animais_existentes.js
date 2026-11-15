@@ -16,16 +16,5 @@ export function validarDescricaoAnimaisExistentes(descricao) {
     return null;
   }
 
-  // Como o tipo no banco é TEXT, definimos um limite razoável para a aplicação (ex: entre 3 e 1000 caracteres)
-  if (descricao.length < 3 || descricao.length > 1000) {
-    return "A descrição dos animais existentes deve ter entre 3 e 1000 caracteres.";
-  }
-
-  // Permite letras (com acentos), números, espaços e pontuações comuns usadas em descrições
-  const regexDescricao = /^[A-Za-zÀ-ÿ0-9\s\.,;\-\(\)\/]+$/;
-  if (!regexDescricao.test(descricao)) {
-    return "A descrição dos animais existentes contém caracteres inválidos.";
-  }
-
   return null;
 }

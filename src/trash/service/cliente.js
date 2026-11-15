@@ -72,7 +72,6 @@ export async function serviceInserirCliente(dados) {
 
 
   // VALIDAR SE A SENHA POSSUÍ OS CRITÉRIOS ESPECÍFICOS
-  console.log(dados.senha)
   if (validarSenha(dados.senha)) {
     const erro = new Error(validarSenha(dados.senha));
     erro.status = 422;

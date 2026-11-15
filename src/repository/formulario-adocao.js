@@ -1,8 +1,20 @@
 
 import { pool } from "../config/conexao.js";
 
-export async function repositoryInserirSolicitacaoDeAdocao(dados) {
+export async function repositorySelecionarSolicitacoesAdocao() {
+    const [rows] = await pool.query("SELECT * FROM solicitacao_adocao");
+    return rows;
+};
 
+export async function repositoryBuscarSolicitacaoAdocaoPorId(id) {
+    const [solicitacao] = await pool.execute(
+      "SELECT * FROM solicitacao_adocao WHERE id = ?",
+      [id],
+    );
+    return solicitacao;
+}
+
+export async function repositoryInserirSolicitacaoDeAdocao(dados) {
     const {
         nome,
         idade,

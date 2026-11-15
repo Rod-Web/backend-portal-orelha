@@ -47,7 +47,6 @@ export async function repositoryEditarTrabalhoVoluntario(id, dados) {
     id,
   ];
 
-  console.log(status)
   const [result] = await pool.execute(query, values);
   return result.affectedRows;
 }

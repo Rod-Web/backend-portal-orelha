@@ -13,15 +13,15 @@ export async function controllerLogin(req, res, next) {
       res
         .cookie("accessToken", tokens.accessToken, {
           httpOnly: true, // JS não pode ler
-          secure: true, // dev: false; HTTP local, sem TLS
-          sameSite: "none", // dev: lax; localhost é "mesmo site" mesmo com portas diferentes
+          secure: false, // dev: false; HTTP local, sem TLS
+          sameSite: "lax", // dev: lax; localhost é "mesmo site" mesmo com portas diferentes
           path: "/rotasprivadas", // só envia em rotas privadas
           maxAge: 15 * 60 * 1000, // 15 min
         })
         .cookie("refreshToken", tokens.refreshToken, {
           httpOnly: true,
-          secure: true,
-          sameSite: "none",
+          secure: false,
+          sameSite: "lax",
           path: "/auth/refresh", // só envia na rota de renovação
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 dias
         })

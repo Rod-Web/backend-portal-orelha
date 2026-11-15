@@ -1,9 +1,30 @@
 import { serviceSelecionarPetsPorCampo } from "./pet.js";
 import { buscarInfosViaCep } from "../APIs/buscarInfosViaCep.js";
 
-import { repositoryInserirSolicitacaoDeAdocao } from "../repository/formulario-adocao.js";
+import { repositorySelecionarSolicitacoesAdocao, repositoryBuscarSolicitacaoAdocaoPorId, repositoryInserirSolicitacaoDeAdocao } from "../repository/formulario-adocao.js";
+
+export async function serviceSelecionarSolicitacoesAdocao() {
+    const allSolicitacoes = await repositorySelecionarSolicitacoesAdocao();
+    if(!allSolicitacoes || allSolicitacoes.length === 0) {
+        const erro = new Error("Nenhuma solicitação encontrada.");
+        erro.status = 404;
+        throw erro;
+    };
+    return allSolicitacoes;
+};
+
+export async function serviceSelecionarSolicitacaoAdocaoPorId(id) {
+  const [solicitacao] = await repositoryBuscarSolicitacaoAdocaoPorId(id);
+  if (!solicitacao || solicitacao.length === 0) {
+    const erro = new Error("Nenhuma solicitacao de adoção encontrado.");
+    erro.status = 404;
+    throw erro;
+  }
+  return solicitacao;
+}
 
 export async function serviceInserirSolicitacaoAdocao(dados) {
+  
   if (
     dados.compromisso_adocao_responsavel !== true ||
     dados.familia_ciente_concorda !== true

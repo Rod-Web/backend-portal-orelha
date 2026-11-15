@@ -2,7 +2,6 @@ import { pool } from "../config/conexao.js";
 
 
 export async function repositoryInserirInscricaoVoluntariado(dados) {
-  console.log(dados)
   const {
     nome,
     idade,

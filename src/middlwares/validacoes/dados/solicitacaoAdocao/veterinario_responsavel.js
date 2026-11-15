@@ -16,16 +16,5 @@ export function validarVeterinarioResponsavel(veterinario) {
     return null;
   }
 
-  // Respeita o limite exato do banco de dados (VARCHAR(100)) e exige um mínimo de 2 caracteres
-  if (veterinario.length < 2 || veterinario.length > 100) {
-    return "O nome do veterinário responsável deve ter entre 2 e 100 caracteres.";
-  }
-
-  // Permite letras (com acentos), espaços e pontos (úteis para abreviações comuns como "Dr." ou "Dra.")
-  const regexVeterinario = /^[A-Za-zÀ-ÿ\s\.]+$/;
-  if (!regexVeterinario.test(veterinario)) {
-    return "O nome do veterinário responsável contém caracteres inválidos.";
-  }
-
   return null;
 }

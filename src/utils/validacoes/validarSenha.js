@@ -19,6 +19,5 @@ export function validarSenha(senha) {
     return "A senha deve conter pelo menos um caractere especial";
   }
 
-  console.log("senha validada")
   return null
 };

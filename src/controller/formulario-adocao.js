@@ -1,4 +1,28 @@
-import { serviceInserirSolicitacaoAdocao } from "../service/formulario-adocao.js";
+import { 
+    serviceSelecionarSolicitacoesAdocao,
+    serviceSelecionarSolicitacaoAdocaoPorId,
+    serviceInserirSolicitacaoAdocao 
+} from "../service/formulario-adocao.js";
+
+export async function controllerSelecionarSolicitacoesAdocao(req, res, next) {
+    try {
+        const solicitacoes = await serviceSelecionarSolicitacoesAdocao();
+        return res.status(200).json(solicitacoes);
+    } catch (error) {
+        next(error);
+    };
+};
+
+export async function controllerSelecionarSolicitacaoAdocaoPorId(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const solicitacao = await serviceSelecionarSolicitacaoAdocaoPorId(id);
+    res.status(200).json(solicitacao);
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function controllerInserirSolicitacaoAdocao(req, res, next) {
     try {
@@ -8,7 +32,7 @@ export async function controllerInserirSolicitacaoAdocao(req, res, next) {
             email: req.body.email,
             endereco_completo: req.body.endereco_completo,
             cep: req.body.cep,
-            telefone: req.body.telefone,
+            telefone: req.body.telefone_contato,
             profissao: req.body.profissao,
             medidas_seguranca_residencial: req.body.medidas_seguranca_residencial,
             comodos_acesso_animal: req.body.comodos_acesso_animal,

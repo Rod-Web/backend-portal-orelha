@@ -15,11 +15,5 @@ export function validarCuidadorDireto(cuidador) {
     return "O nome do cuidador direto deve ter entre 2 e 100 caracteres.";
   }
 
-  // Permite letras (com acentos), espaços, pontos e hífens comuns em nomes de pessoas
-  const regexCuidador = /^[A-Za-zÀ-ÿ\s\.\-]+$/;
-  if (!regexCuidador.test(cuidador)) {
-    return "O nome do cuidador direto contém caracteres inválidos.";
-  }
-
   return null;
 }

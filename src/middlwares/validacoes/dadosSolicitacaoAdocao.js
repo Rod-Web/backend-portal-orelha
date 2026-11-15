@@ -21,6 +21,15 @@ import { validarRotinaFamiliar } from "./dados/solicitacaoAdocao/rotina_familiar
 import { validarCompromissoAdocaoResponsavel } from "./dados/solicitacaoAdocao/compromisso_adocao_responsavel.js";
 import { validarId } from "./dados/global/id.js";
 
+export function validarIdGeral(req, res, next) {
+  const { id } = req.params;
+
+  const erro = validarId(id);
+
+  if (erro) return res.status(400).json({ erro });
+
+  next();
+}
 
 export function dadosSolicitacaoAdocao(req, res, next) {
 
@@ -36,7 +45,7 @@ export function dadosSolicitacaoAdocao(req, res, next) {
     email: req.body.email,
     endereco_completo: req.body.endereco_completo,
     cep: req.body.cep,
-    telefone: req.body.telefone,
+    telefone: req.body.telefone_contato,
     profissao: req.body.profissao,
     medidas_seguranca_residencial: req.body.medidas_seguranca_residencial,
     comodos_acesso_animal: req.body.comodos_acesso_animal,
