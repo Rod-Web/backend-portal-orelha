@@ -10,6 +10,12 @@ import { normalizarDadosPet } from "../utils/normalizacoes/normalizarDadosPet.js
 import { calcularIdadeComOsDias } from "../utils/normalizacoes/calcularIdadeComOsDias.js";
 import { uploadImg } from '../utils/salvarImgPet.js';
 
+
+
+import { repositorySelecionarSolicitacoesAdocao } from "../repository/formulario-adocao.js";
+
+
+
 export async function serviceSelecionarPets() {
     const allPets = await repositoryBuscarPets();
     if (!allPets || allPets.length === 0) {
@@ -146,6 +152,39 @@ export async function serviceEditarPet(id, dados, status) {
     const upload_url = await uploadImg(dados.img);
     dados.img = upload_url;
   }
+
+  async function serviceVerificarPermissaoParaEditarStatus(id) {
+    // Ver se tem alguma solicicatacao com esse id
+    const solicitacoes = await repositorySelecionarSolicitacoesAdocao();
+    const buscador = solicitacoes.filter(solicitacao => {
+      return Number(solicitacao.id_pet) === Number(id)
+    });
+
+    if (buscador.length === 0) {
+      return null
+    }
+
+      if(buscador[0].status === "APROVADA"){
+        const erro = new Error("Não foi possível mudar o status desse pet. Ele já foi adotado pelo " + buscador[0].nome_completo + ".");
+        erro.status = 422;
+        throw erro;
+      }
+
+      if(buscador[0].status === "EM_PROCESSO" || "PENDENTE") {
+        const erro = new Error("Não foi possível mudar o status desse pet. Primeiro analise a solicitação do " + buscador[0].nome_completo + ".");
+        erro.status = 422;
+        throw erro;
+      }    
+
+  }
+
+  await serviceVerificarPermissaoParaEditarStatus(id)
+
+
+
+
+
+
 
   const affectedRows = await repositoryEditarPet(id, dados);
   if (affectedRows !== 1) {
