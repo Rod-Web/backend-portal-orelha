@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(
   cors({
     // definir rotas
-    origin: ["http://localhost:5501", "https://portalorelhafront.vercel.app", "https://frontend-portal-orelha.vercel.app"],
+    origin: ["http://localhost:5501", "https://admin-portal-orelha.vercel.app/", "https://portalorelhafront.vercel.app", "https://frontend-portal-orelha.vercel.app"],
     credentials: true,
   }),
 );
