@@ -170,7 +170,7 @@ export async function serviceEditarPet(id, dados, status) {
         throw erro;
       }
 
-      if(buscador[0].status === "EM_ANALISE" || "PENDENTE") {
+      if(buscador[0].status === "EM_ANALISE" || buscador[0].status === "PENDENTE") {
         const erro = new Error("Não foi possível mudar os dados desse pet. Primeiro analise a solicitação do " + buscador[0].nome_completo + ".");
         erro.status = 422;
         throw erro;
