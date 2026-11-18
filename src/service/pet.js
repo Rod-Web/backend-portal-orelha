@@ -165,13 +165,13 @@ export async function serviceEditarPet(id, dados, status) {
     }
 
       if(buscador[0].status === "APROVADA"){
-        const erro = new Error("Não foi possível mudar o status desse pet. Ele já foi adotado pelo " + buscador[0].nome_completo + ".");
+        const erro = new Error("Não foi possível mudar os dados desse pet. Ele já foi adotado pelo " + buscador[0].nome_completo + ".");
         erro.status = 422;
         throw erro;
       }
 
-      if(buscador[0].status === "EM_PROCESSO" || "PENDENTE") {
-        const erro = new Error("Não foi possível mudar o status desse pet. Primeiro analise a solicitação do " + buscador[0].nome_completo + ".");
+      if(buscador[0].status === "EM_ANALISE" || "PENDENTE") {
+        const erro = new Error("Não foi possível mudar os dados desse pet. Primeiro analise a solicitação do " + buscador[0].nome_completo + ".");
         erro.status = 422;
         throw erro;
       }    
