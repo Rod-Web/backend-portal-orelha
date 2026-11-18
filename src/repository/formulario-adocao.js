@@ -1,8 +1,6 @@
 
 import { pool } from "../config/conexao.js";
 
-import { repositoryEditarStatusPet } from "./pet.js";
-
 export async function repositorySelecionarSolicitacoesAdocao() {
     const [rows] = await pool.query("SELECT * FROM solicitacao_adocao");
     return rows;
