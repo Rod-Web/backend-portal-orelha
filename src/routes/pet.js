@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { controllerSelecionarPets, controllerInserirPet, controllerSelecionarPetsPorCampo, controllerSelecionarPetsPorId, controllerEditarPet, controllerDeletarPetsPorId} from '../controller/pet.js'
+import { controllerSelecionarPets, controllerInserirPet, controllerSelecionarPetsPorCampo, controllerSelecionarPetsPorId, controllerEditarPet, controllerEditarStatusPet, controllerDeletarPetsPorId} from '../controller/pet.js'
 import { validarAccessMiddlware } from '../middlwares/validacoes/dadosUsuario.js';
 import { autenticar } from '../middlwares/autenticacao/autenticar.js';
 import { confirmarPermissoesAdmin } from '../middlwares/permissoes/permissaoAdmin.js';
@@ -51,6 +51,16 @@ route_pet.put(
   dadosPet,
   validarStatusPet,
   controllerEditarPet,
+);
+
+route_pet.patch(
+  "/rotasprivadas/editarStatusPet/:id",
+  validarAccessMiddlware,
+  autenticar,
+  confirmarPermissoesAdmin,
+  validarIdPet,
+  validarStatusPet, 
+  controllerEditarStatusPet
 );
 
 

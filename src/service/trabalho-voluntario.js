@@ -4,6 +4,7 @@ import {
   repositoryBuscarTrabalhoVoluntarioPorId,
   repositoryCadastrarTrabalhoVoluntario,
   repositoryEditarTrabalhoVoluntario,
+  repositoryEditarStatusTrabalhoVoluntario,
   repositoryDeletarTrabalhoVoluntarioPorId,
 } from "../repository/trabalho-voluntario.js";
 
@@ -77,6 +78,23 @@ export async function serviceEditarTrabalhoVoluntario(id, dados, status) {
   }
 
   return dados.titulo;
+}
+
+export async function serviceEditarStatusTrabalhoVoluntario(id, status) {
+  await serviceSelecionarTrabalhoVoluntarioPorId(id);
+
+  const affectedRows = await repositoryEditarStatusTrabalhoVoluntario(
+    id,
+    status,
+  );
+  if (affectedRows !== 1) {
+    const erro = new Error(
+      "Não foi possível editar o status do trabalho voluntário. Tente novamente ou entre em contato com o suporte.",
+    );
+    throw erro;
+  }
+
+  return { message: "Sucesso! Status alterado." };
 }
 
 export async function serviceDeletarTrabalhoVoluntarioPorId(id) {

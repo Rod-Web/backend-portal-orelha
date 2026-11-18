@@ -18,6 +18,14 @@ export async function repositoryEditarPet(id, dados) {
     return result.affectedRows;
 }
 
+export async function repositoryEditarStatusPet(id, status) {
+  const [result] = await pool.execute(
+    `UPDATE pet SET status = ? WHERE numero_identificacao = ?`,
+    [status, id],
+  );
+  return result.affectedRows;
+}
+
 export async function repositoryDeletarPetPorId(id) {
     const [pet] = await pool.execute(`DELETE FROM pet WHERE numero_identificacao = ?`, [id]);
     return pet.affectedRows;

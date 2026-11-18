@@ -1,5 +1,17 @@
 import { pool } from "../config/conexao.js";
 
+export async function repositorySelecionarInscricoesVoluntariados() {
+  const [rows] = await pool.query("SELECT * FROM inscricao_voluntariado");
+  return rows;
+};
+
+export async function repositoryBuscarInscricaoVoluntariadoPorId(id) {
+  const [inscricao] = await pool.execute(
+    "SELECT * FROM inscricao_voluntariado WHERE id = ?",
+    [id],
+  );
+  return inscricao;
+}
 
 export async function repositoryInserirInscricaoVoluntariado(dados) {
   const {
@@ -69,3 +81,13 @@ export async function repositoryInserirInscricaoVoluntariado(dados) {
 
   return result.affectedRows;
 }
+
+export async function repositoryEditarStatusInscricaoVoluntariado(id, status) {
+    const [result] = await pool.execute(`UPDATE inscricao_voluntariado SET status = ? WHERE id = ?`, [status, id]);
+    return result.affectedRows
+}
+
+export async function repositoryDeletarInscricaoVoluntariadoPorId(id) {
+  const [result] = await pool.execute(`DELETE FROM inscricao_voluntariado WHERE id = ?`, [id]);
+  return result.affectedRows
+};

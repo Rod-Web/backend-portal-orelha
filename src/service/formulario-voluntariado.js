@@ -1,6 +1,33 @@
 import { serviceSelecionarTrabalhoVoluntarioPorCampo } from "./trabalho-voluntario.js";
 
-import { repositoryInserirInscricaoVoluntariado } from "../repository/formulario-voluntariado.js";
+import {
+  repositorySelecionarInscricoesVoluntariados,
+  repositoryBuscarInscricaoVoluntariadoPorId,
+  repositoryInserirInscricaoVoluntariado,
+  repositoryEditarStatusInscricaoVoluntariado,
+  repositoryDeletarInscricaoVoluntariadoPorId,
+} from "../repository/formulario-voluntariado.js";
+
+
+export async function serviceSelecionarInscricoesVoluntariados() {
+  const allInscricoes = await repositorySelecionarInscricoesVoluntariados();
+  if (!allInscricoes || allInscricoes.length === 0) {
+    const erro = new Error("Nenhuma inscrição encontrada.");
+    erro.status = 404;
+    throw erro;
+  }
+  return allInscricoes;
+};
+
+export async function serviceSelecionarInscricaoVoluntariadoPorId(id) {
+    const [inscricao] = await repositoryBuscarInscricaoVoluntariadoPorId(id);
+    if (!inscricao || inscricao.length === 0) {
+        const erro = new Error("Nenhuma inscrição em trabalho voluntário encontrada.");
+        erro.status = 404;
+        throw erro;
+    }
+    return inscricao;
+}
 
 export async function serviceInserirInscricaoVoluntariado(dados) {
 
@@ -34,4 +61,39 @@ export async function serviceInserirInscricaoVoluntariado(dados) {
 
     return { mensagem: `Sua inscricao foi realizada com sucesso, aguarde pelo contato da ONG.` };
 
+}
+
+export async function serviceEditarStatusInscricaoVoluntariado(id, status) {
+  await serviceSelecionarInscricaoVoluntariadoPorId(id);
+
+    const affectedRows = await repositoryEditarStatusInscricaoVoluntariado(id, status);
+    if (affectedRows !== 1) {
+      const erro = new Error(
+        "Não foi possível editar o status da inscrição. Tente novamente ou entre em contato com o suporte.",
+      );
+      throw erro;
+    }
+
+  return {message: "Sucesso! Status alterado."}
+  
+}
+
+export async function serviceDeletarInscricaoVoluntariadoPorId(id) {
+  const inscricao = await repositoryBuscarInscricaoVoluntariadoPorId(id);
+  if (inscricao.length !== 1) {
+    const erro = new Error("Inscrição de trabalho voluntário não encontrada.");
+    erro.status = 404;
+    throw erro;
+  }
+
+  const affectedRows = await repositoryDeletarInscricaoVoluntariadoPorId(id);
+
+  if (affectedRows !== 1) {
+    throw new Error(
+      "Não foi possível excluir a inscrição do voluntário. Tente novamente ou entre em contato com o suporte.",
+    );
+  }
+  return {
+    mensagem: `Inscrição realizada pelo: '${inscricao[0].nome_completo}' excluída com sucesso.`,
+  };
 }

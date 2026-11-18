@@ -82,7 +82,13 @@ export function validarCampoEValorDeBuscaPet(req, res, next) {
 
 export function validarStatusPet(req, res, next) {
   
-  const { status } = req.body;
+    if (!req.body) {
+      return res.status(400).json({
+        erro: "O corpo da requisição não foi informado.",
+      });
+    }
+    
+    const { status } = req.body;
 
   const erro = validarStatus(status);
 

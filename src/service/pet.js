@@ -3,6 +3,7 @@ import {
   repositoryCadastrarPet,
   repositoryBuscarPetsPorCampo,
   repositoryEditarPet,
+  repositoryEditarStatusPet,
   repositoryDeletarPetPorId,
 } from "../repository/pet.js";
 import { normalizarDadosPet } from "../utils/normalizacoes/normalizarDadosPet.js";
@@ -156,4 +157,19 @@ export async function serviceEditarPet(id, dados, status) {
 
   return dados.nome;
 
+}
+
+export async function serviceEditarStatusPet(id, status) {
+    await serviceSelecionarPetsPorCampo("numero_identificacao", id);
+
+    const affectedRows = await repositoryEditarStatusPet(id, status);
+    if (affectedRows !== 1) {
+      const erro = new Error(
+        "Não foi possível editar o status do pet. Tente novamente ou entre em contato com o suporte.",
+      );
+      throw erro;
+    }
+
+  return {message: "Sucesso! Status alterado."}
+  
 }

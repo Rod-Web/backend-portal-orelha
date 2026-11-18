@@ -22,17 +22,5 @@ export function validarEnderecoRegiao(endereco) {
     return "O endereço residencial deve ter entre 5 e 250 caracteres.";
   }
 
-  // 5. Valida caracteres permitidos (letras com acentos, números, espaços, vírgulas, hífens e pontos)
-  const regexCaracteres = /^[A-Za-zÀ-ÿ0-9\s,\.\-]+$/;
-  if (!regexCaracteres.test(endereco)) {
-    return "O endereço residencial contém caracteres inválidos.";
-  }
-
-  // 6. Valida o formato "Cidade, Bairro" (exige separação por vírgula com ambos preenchidos)
-  const partes = endereco.split(",");
-  if (partes.length !== 2 || !partes[0].trim() || !partes[1].trim()) {
-    return "O endereço residencial deve seguir o formato: Cidade, Bairro (ex: São Paulo, Bela Vista).";
-  }
-
   return null;
 }

@@ -1,4 +1,30 @@
-import { serviceInserirInscricaoVoluntariado } from "../service/formulario-voluntariado.js";
+import {
+  serviceSelecionarInscricoesVoluntariados,
+  serviceSelecionarInscricaoVoluntariadoPorId,
+  serviceInserirInscricaoVoluntariado,
+  serviceEditarStatusInscricaoVoluntariado,
+  serviceDeletarInscricaoVoluntariadoPorId,
+} from "../service/formulario-voluntariado.js";
+
+export async function controllerSelecionarInscricoesVoluntariados(req, res, next) {
+  try {
+    const inscricoes = await serviceSelecionarInscricoesVoluntariados();
+    return res.status(200).json(inscricoes);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export async function controllerSelecionarInscricaoVoluntariadoPorId(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const inscricao = await serviceSelecionarInscricaoVoluntariadoPorId(id);
+    res.status(200).json(inscricao);
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function controllerInserirInscricaoVoluntariado(req, res, next) {
   try {
@@ -30,3 +56,26 @@ export async function controllerInserirInscricaoVoluntariado(req, res, next) {
     next(err);
   }
 }
+
+export async function controllerEditarStatusInscricaoVoluntariado(req, res, next) {
+  try {
+    const {id} = req.params;
+
+    const status = req.body.status.toUpperCase().trim();
+
+    const edicao = await serviceEditarStatusInscricaoVoluntariado(id, status);
+    res.status(200).json(edicao);
+  } catch (err) {
+    next(err)
+  }
+};
+
+export async function controllerDeletarInscricaoVoluntariadoPorId(req, res, next) {
+  try {
+    const { id } = req.params;
+    const inscricao = await serviceDeletarInscricaoVoluntariadoPorId(id);
+    res.status(200).json(inscricao);
+  } catch (error) {
+    next(error);
+  }
+};

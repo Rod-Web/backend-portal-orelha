@@ -51,6 +51,13 @@ export async function repositoryEditarTrabalhoVoluntario(id, dados) {
   return result.affectedRows;
 }
 
+export async function repositoryEditarStatusTrabalhoVoluntario(id, status) {
+  const [result] = await pool.execute(
+    `UPDATE oportunidade_voluntariado SET status = ? WHERE id = ?`,
+    [status, id],
+  );
+  return result.affectedRows;
+}
 export async function repositoryDeletarTrabalhoVoluntarioPorId(id) {
   const [result] = await pool.execute(`DELETE FROM oportunidade_voluntariado WHERE id = ?`, [id]);
   return result.affectedRows 

@@ -5,6 +5,7 @@ import {
   controllerSelecionarTrabalhosVoluntarioPorId,
   controllerInserirTrabalhoVoluntario,
   controllerEditarTrabalhoVoluntario,
+  controllerEditarStatusTrabalhoVoluntario,
   controllerDeletarTrabalhoVoluntarioPorId
 } from "../controller/trabalho-voluntario.js";
 import {
@@ -54,6 +55,16 @@ route_oportunidade.put(
   dadosTrabalhoVoluntario,
   validarStatusTrabalhoVoluntario,
   controllerEditarTrabalhoVoluntario
+);
+
+route_oportunidade.patch(
+  "/rotasprivadas/editarStatusTrabalhoVoluntario/:id",
+  validarAccessMiddlware,
+  autenticar,
+  confirmarPermissoesAdmin,
+  validarIdGeral,
+  validarStatusTrabalhoVoluntario,
+  controllerEditarStatusTrabalhoVoluntario,
 );
 
 route_oportunidade.delete(

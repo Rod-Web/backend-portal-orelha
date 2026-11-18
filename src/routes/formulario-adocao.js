@@ -2,16 +2,20 @@ import express from 'express'
 
 import { dadosSolicitacaoAdocao } from "../middlwares/validacoes/dadosSolicitacaoAdocao.js";
 
+import { validarIdGeral } from "../middlwares/validacoes/dadosTrabalhoVoluntario.js";
+
+import { validarStatusForms } from "../middlwares/validacoes/dadosForms.js"
+
 import { validarAccessMiddlware } from "../middlwares/validacoes/dadosUsuario.js";
 import { autenticar } from "../middlwares/autenticacao/autenticar.js";
 import { confirmarPermissoesAdmin } from "../middlwares/permissoes/permissaoAdmin.js";
-
-import { validarIdGeral } from '../middlwares/validacoes/dadosTrabalhoVoluntario.js';
 
 import {
   controllerSelecionarSolicitacoesAdocao,
   controllerSelecionarSolicitacaoAdocaoPorId,
   controllerInserirSolicitacaoAdocao,
+  controllerEditarStatusSolicitacaoAdocao,
+  controllerDeletarSolicitacaoAdocaoPorId,
 } from "../controller/formulario-adocao.js";
 
 export const route_formularioAdocao = express.Router()
@@ -38,4 +42,23 @@ route_formularioAdocao.post(
   "/inserirSolicitacaoAdocao",
   dadosSolicitacaoAdocao,
   controllerInserirSolicitacaoAdocao,
+);
+
+route_formularioAdocao.patch(
+  "/rotasprivadas/editarStatusSolicitacao/:id",
+  validarAccessMiddlware,
+  autenticar,
+  confirmarPermissoesAdmin,
+  validarIdGeral,
+  validarStatusForms, 
+  controllerEditarStatusSolicitacaoAdocao
+);
+
+route_formularioAdocao.delete(
+  "/rotasprivadas/deletarSolicitacaoAdocao/:id",
+  validarAccessMiddlware,
+  autenticar,
+  confirmarPermissoesAdmin,
+  validarIdGeral,
+  controllerDeletarSolicitacaoAdocaoPorId,
 );

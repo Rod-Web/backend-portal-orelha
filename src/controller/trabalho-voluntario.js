@@ -4,6 +4,7 @@ import {
   serviceSelecionarTrabalhoVoluntarioPorId,
   serviceInserirTrabalhoVoluntario,
   serviceEditarTrabalhoVoluntario,
+  serviceEditarStatusTrabalhoVoluntario,
   serviceDeletarTrabalhoVoluntarioPorId
 } from "../service/trabalho-voluntario.js";
 
@@ -80,6 +81,19 @@ export async function controllerEditarTrabalhoVoluntario(req, res, next) {
     next(err);
   }
 }
+
+export async function controllerEditarStatusTrabalhoVoluntario(req, res, next) {
+  try {
+    const {id} = req.params;
+
+    const status = req.body.status.toUpperCase().trim();
+
+    const edicao = await serviceEditarStatusTrabalhoVoluntario(id, status);
+    res.status(200).json(edicao);
+  } catch (err) {
+    next(err)
+  }
+};
 
 
 export async function controllerDeletarTrabalhoVoluntarioPorId(req, res, next) {

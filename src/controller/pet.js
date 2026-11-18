@@ -4,6 +4,7 @@ import {
   serviceSelecionarPetsPorCampo,
   serviceDeletarPetPorId,
   serviceEditarPet,
+  serviceEditarStatusPet
 } from "../service/pet.js";
 
 export async function controllerSelecionarPets(req, res, next) {
@@ -87,6 +88,20 @@ export async function controllerEditarPet(req, res, next) {
     next(err);
   }
 }
+
+export async function controllerEditarStatusPet(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const status = req.body.status.toUpperCase().trim();
+
+    const edicao = await serviceEditarStatusPet(id, status);
+    res.status(200).json(edicao);
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 export async function controllerDeletarPetsPorId(req, res, next) {
   try {
