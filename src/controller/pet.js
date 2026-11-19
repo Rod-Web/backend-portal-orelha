@@ -107,7 +107,7 @@ export async function controllerDeletarPetsPorId(req, res, next) {
   try {
     const { id } = req.params;
     const pet = await serviceDeletarPetPorId(id);
-    res.status(204).json(pet);
+    res.status(200).json(pet);
   } catch (error) {
     next(error);
   }
