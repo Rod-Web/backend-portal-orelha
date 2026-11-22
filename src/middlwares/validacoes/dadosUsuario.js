@@ -2,6 +2,7 @@ import { validarCPF } from "./dados/pessoa/cpf.js";
 import { validarNome } from "./dados/global/nome.js"
 import { validarSenha } from "./dados/pessoa/senha.js";
 import { validarEmail} from "./dados/pessoa/email.js"
+import { validarUsername } from './dados/pessoa/username.js'
 
 export function validarAccessMiddlware(req, res, next) {
   const access_token = req.cookies.accessToken;
@@ -27,13 +28,15 @@ export function dadosUsuario(req, res, next) {
         nome: req.body.nome,
         senha: req.body.senha,
         email: req.body.email,
+        username: req.body.username
     };
 
     const erro =
         validarCPF(dados.cpf) ||
         validarNome(dados.nome) ||
         validarSenha(dados.senha) ||
-        validarEmail(dados.email)
+        validarEmail(dados.email) ||
+        validarUsername(dados.username)
 
     if (erro) return res.status(400).json({ erro });
 

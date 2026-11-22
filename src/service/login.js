@@ -5,17 +5,15 @@ import {
   gerarRefreshToken,
 } from "../utils/tokens/gerarToken.js";
 
-export async function serviceLogar(cpf, senha) {
-  // Normalizar CPF
-  cpf = cpf.trim().replace(/\D/g, "");
+export async function serviceLogar(username, senha) {
 
   // Relatório de erros
   // -
   // -
   // -
-  // Buscar se o CPF existe;
-  let campo = "cpf";
-  let usuario = await repositoryBuscarAdminPorCampo(campo, cpf);
+  // Buscar se o username existe;
+  let campo = "username";
+  let usuario = await repositoryBuscarAdminPorCampo(campo, username);
   if (usuario.length !== 1) {
     const erro = new Error("Usuário ou senha incorreto.");
     erro.status = 401;

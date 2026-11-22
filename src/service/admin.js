@@ -8,11 +8,12 @@ import { repositoryBuscarAdminPorCampo, repositoryCadastrarAdmin } from '../repo
 
 export async function serviceInserirAdmin(dados) {
   // NORMALIZAÇÂO
+  const username = dados.username
   dados = normalizarDadosUsuario(
     dados.cpf,
     dados.nome,
     dados.email,
-    dados.senha
+    dados.senha,
   );
   
   // VALIDAR SE O CPF É UNICO
@@ -42,6 +43,15 @@ export async function serviceInserirAdmin(dados) {
     throw erro
   }
 
+  campo = "username";
+  usuario = await repositoryBuscarAdminPorCampo(campo, username);
+  if (usuario.length != 0) {
+    const erro = new Error("Já existe um usuário com esse username");
+    erro.status = 409;
+    throw erro;
+  }
+ 
+
   // VALIDAR SE A SENHA POSSUÍ OS CRITÉRIOS ESPECÍFICOS
   if (validarSenha(dados.senha)) {
     const erro = new Error(validarSenha(dados.senha));
@@ -56,7 +66,8 @@ export async function serviceInserirAdmin(dados) {
   // JUNTAR INFORMAÇÕES DO USUÁRIO
   const user = {
     infosUser: dados,
-    usuario: "admin",
+    username: username,
+    typeUsuario: "admin",
     senha: senhaCriptografada
   };
 

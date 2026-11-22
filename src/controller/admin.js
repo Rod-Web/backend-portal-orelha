@@ -6,7 +6,8 @@ export async function controllerInserirAdmin(req, res, next) {
         cpf: req.body.cpf,
         nome: req.body.nome,
         senha: req.body.senha,
-        email: req.body.email
+        email: req.body.email,
+        username: req.body.username
       };
 
       const nomeAdmin = await serviceInserirAdmin(dados);

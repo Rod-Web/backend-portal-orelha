@@ -2,8 +2,8 @@ import {serviceLogar} from '../service/login.js'
 
 export async function controllerLogin(req, res, next) {
     try {
-      const { cpf, senha } = req.body;
-      const { tokens, usuario } = await serviceLogar(cpf, senha);
+      const { username, senha } = req.body;
+      const { tokens, usuario } = await serviceLogar(username, senha);
 
     /* ========== PRODUÇÃO (HTTPS) ==========
     secure: true,          // produção: exige HTTPS

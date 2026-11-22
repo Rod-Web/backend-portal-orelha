@@ -1,4 +1,4 @@
-import {validarCPF} from './dados/pessoa/cpf.js'
+import {validarUsername} from './dados/pessoa/username.js'
 import { validarSenha } from './dados/pessoa/senha.js';
 
 export function dadosLogin(req, res, next) {
@@ -7,9 +7,9 @@ export function dadosLogin(req, res, next) {
       erro: "O corpo da requisição não foi informado.",
     });
   }
-    const {cpf, senha} = req.body
+    const {username, senha} = req.body
 
-    const erro = validarCPF(cpf) || validarSenha(senha);
+    const erro = validarUsername(username) || validarSenha(senha);
 
     if(erro) {
         console.error(erro);

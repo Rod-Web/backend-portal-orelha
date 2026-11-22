@@ -20,10 +20,11 @@ export async function repositoryCadastrarAdmin(dados) {
       dados.infosUser.nome,
       dados.infosUser.cpf,
       dados.infosUser.email,
+      dados.username,
       dados.senha,
     ];
     const [admin] = await pool.execute(
-      `INSERT INTO administrador (nome, cpf, email, senha) VALUES (?, ?, ?, ?)`,
+      `INSERT INTO administrador (nome, cpf, email, username, senha) VALUES (?, ?, ?, ?, ?)`,
       dadosAdmin,
     );
 
