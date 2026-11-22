@@ -50,6 +50,7 @@ export async function repositoryInserirSolicitacaoDeAdocao(dados) {
             descricao_animais_anteriores,
             rotina_familiar,
             compromisso_adocao_responsavel,
+            entrevista,
             id_pet
         } = dados;
         const query = `
@@ -75,9 +76,10 @@ export async function repositoryInserirSolicitacaoDeAdocao(dados) {
                 descricao_animais_anteriores,
                 rotina_familiar,
                 compromisso_adocao_responsavel,
+                entrevista,
                 id_pet
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         const values = [
             nome,
@@ -101,6 +103,7 @@ export async function repositoryInserirSolicitacaoDeAdocao(dados) {
             descricao_animais_anteriores,
             rotina_familiar,
             compromisso_adocao_responsavel,
+            entrevista,
             id_pet
         ];
         const [result] = await conn.execute(query, values);

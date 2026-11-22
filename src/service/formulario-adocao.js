@@ -111,6 +111,8 @@ export async function serviceInserirSolicitacaoAdocao(dados) {
     throw erro;
   }
 
+  dados.entrevista = false
+
   // ─── Insere (transação atômica no repository) ───────
   const affectedRows = await repositoryInserirSolicitacaoDeAdocao(dados);
 
