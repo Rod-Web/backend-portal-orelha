@@ -3,6 +3,7 @@ import {
   serviceSelecionarSolicitacaoAdocaoPorId,
   serviceInserirSolicitacaoAdocao,
   serviceEditarStatusSolicitacaoAdocao,
+  serviceEditarEntrevistaSolicitacaoAdocao,
   serviceDeletarSolicitacaoAdocaoPorId,
 } from "../service/formulario-adocao.js";
 
@@ -68,6 +69,19 @@ export async function controllerEditarStatusSolicitacaoAdocao(req, res, next) {
     const status = req.body.status.toUpperCase().trim();
 
     const edicao = await serviceEditarStatusSolicitacaoAdocao(id, status);
+    res.status(200).json(edicao);
+  } catch (err) {
+    next(err)
+  }
+}
+
+export async function controllerEditarEntrevistaSolicitacaoAdocao(req, res, next){
+  try {
+    const {id} = req.params;
+
+    const entrevista = req.body.entrevista;
+
+    const edicao = await serviceEditarEntrevistaSolicitacaoAdocao(id, entrevista);
     res.status(200).json(edicao);
   } catch (err) {
     next(err)

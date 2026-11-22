@@ -128,6 +128,11 @@ export async function repositoryEditarStatusSolicitacaoAdocao(id, status) {
     return result.affectedRows
 }
 
+export async function repositoryEditarEntrevistaSolicitacaoAdocao(id, status) {
+    const [result] = await pool.execute(`UPDATE solicitacao_adocao SET entrevista = ? WHERE id = ?`, [status, id]);
+    return result.affectedRows
+}
+
 export async function repositoryDeletarSolicitacaoAdocaoPorId(id) {
   const [result] = await pool.execute(`DELETE FROM solicitacao_adocao WHERE id = ?`, [id]);
   return result.affectedRows 

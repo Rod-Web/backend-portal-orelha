@@ -6,6 +6,7 @@ import {
   repositoryBuscarSolicitacaoAdocaoPorId,
   repositoryInserirSolicitacaoDeAdocao,
   repositoryEditarStatusSolicitacaoAdocao,
+  repositoryEditarEntrevistaSolicitacaoAdocao,
   repositoryDeletarSolicitacaoAdocaoPorId,
 } from "../repository/formulario-adocao.js";
 
@@ -142,6 +143,21 @@ export async function serviceEditarStatusSolicitacaoAdocao(id, status) {
     }
 
   return {message: "Sucesso! Status alterado."}
+  
+}
+
+export async function serviceEditarEntrevistaSolicitacaoAdocao(id, entrevista) {
+  await serviceSelecionarSolicitacaoAdocaoPorId(id);
+
+    const affectedRows = await repositoryEditarEntrevistaSolicitacaoAdocao(id, entrevista);
+    if (affectedRows !== 1) {
+      const erro = new Error(
+        "Não foi possível editar o estado da entrevista da solicitação. Tente novamente ou entre em contato com o suporte.",
+      );
+      throw erro;
+    }
+
+  return {message: "Sucesso! O estado da entrevista foi atualizado com sucesso."}
   
 }
 

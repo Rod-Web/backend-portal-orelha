@@ -33,12 +33,12 @@ export function validarIdGeral(req, res, next) {
 
 export function dadosSolicitacaoAdocao(req, res, next) {
 
-    if (!req.body) {
-      return res.status(400).json({
-        erro: "O corpo da requisição não foi informado.",
-      });
-    }
-    
+  if (!req.body) {
+    return res.status(400).json({
+      erro: "O corpo da requisição não foi informado.",
+    });
+  }
+
   const dados = {
     nome: req.body.nome_completo,
     idade: req.body.idade,
@@ -95,3 +95,24 @@ export function dadosSolicitacaoAdocao(req, res, next) {
 
   next();
 }
+
+
+export function validarEntrevista(req, res, next) {
+  function validacao(entrevista) {
+
+    if (entrevista === null || entrevista === undefined || entrevista === "") return "O campo da entrevista deve existir.";
+
+    if (typeof entrevista !== "boolean") return "O campo da entrevista precisa ser true ou false.";
+
+    return null;
+  }
+
+
+  if (!req.body) return res.status(400).json({ erro: "O corpo da requisição não foi informado." });
+
+  const { entrevista } = req.body;
+  const erro = validacao(entrevista);
+  if (erro) return res.status(400).json({ erro });
+
+  next();
+};

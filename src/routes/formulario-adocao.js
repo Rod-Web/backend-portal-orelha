@@ -6,6 +6,9 @@ import { validarIdGeral } from "../middlwares/validacoes/dadosTrabalhoVoluntario
 
 import { validarStatusForms } from "../middlwares/validacoes/dadosForms.js"
 
+import { validarEntrevista } from "../middlwares/validacoes/dadosSolicitacaoAdocao.js"
+
+
 import { validarAccessMiddlware } from "../middlwares/validacoes/dadosUsuario.js";
 import { autenticar } from "../middlwares/autenticacao/autenticar.js";
 import { confirmarPermissoesAdmin } from "../middlwares/permissoes/permissaoAdmin.js";
@@ -15,6 +18,7 @@ import {
   controllerSelecionarSolicitacaoAdocaoPorId,
   controllerInserirSolicitacaoAdocao,
   controllerEditarStatusSolicitacaoAdocao,
+  controllerEditarEntrevistaSolicitacaoAdocao,
   controllerDeletarSolicitacaoAdocaoPorId,
 } from "../controller/formulario-adocao.js";
 
@@ -53,6 +57,16 @@ route_formularioAdocao.patch(
   validarStatusForms, 
   controllerEditarStatusSolicitacaoAdocao
 );
+
+route_formularioAdocao.patch(
+  "/rotasprivadas/editarEntrevista/:id",
+  validarAccessMiddlware,
+  autenticar,
+  confirmarPermissoesAdmin,
+  validarIdGeral,
+  validarEntrevista,
+  controllerEditarEntrevistaSolicitacaoAdocao
+)
 
 route_formularioAdocao.delete(
   "/rotasprivadas/deletarSolicitacaoAdocao/:id",
