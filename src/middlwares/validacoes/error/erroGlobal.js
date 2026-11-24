@@ -1,6 +1,8 @@
 export function middlewaresError(err, req, res, next) {
   const status = err.status || (err.name === "MulterError" ? 400 : 500);
 
+  console.log(err.message)
+
   if (status === 500) {
     return res.status(status).json({
       erro: "Erro interno no servidor. Informe o suporte técnico.",
