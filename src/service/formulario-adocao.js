@@ -132,7 +132,6 @@ export async function serviceInserirSolicitacaoAdocao(dados) {
 
 export async function serviceInserirAnotacoes(id, anotacoes) {
     const solicitacao = await serviceSelecionarSolicitacaoAdocaoPorId(id);
-  console.log(solicitacao.entrevista)
     if(solicitacao.entrevista !== true && solicitacao.entrevista !== 1) {
       const erro = new Error("Para criar uma anotação, precisa marcar o campo de entrevista como realizado.");
       erro.status = 409;
