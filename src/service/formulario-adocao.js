@@ -5,6 +5,7 @@ import {
   repositorySelecionarSolicitacoesAdocao,
   repositoryBuscarSolicitacaoAdocaoPorId,
   repositoryInserirSolicitacaoDeAdocao,
+  repositoryInserirAnotacoes,
   repositoryEditarStatusSolicitacaoAdocao,
   repositoryEditarEntrevistaSolicitacaoAdocao,
   repositoryDeletarSolicitacaoAdocaoPorId,
@@ -127,6 +128,28 @@ export async function serviceInserirSolicitacaoAdocao(dados) {
   return {
     mensagem: `Sua solicitação foi realizada com sucesso. Aguarde o contato da ONG.`,
   };
+}
+
+export async function serviceInserirAnotacoes(id, anotacoes) {
+    const solicitacao = await serviceSelecionarSolicitacaoAdocaoPorId(id);
+  console.log(solicitacao.entrevista)
+    if(solicitacao.entrevista !== true && solicitacao.entrevista !== 1) {
+      const erro = new Error("Para criar uma anotação, precisa marcar o campo de entrevista como realizado.");
+      erro.status = 409;
+      throw erro;
+    };
+
+    const affectedRows = await repositoryInserirAnotacoes(id, anotacoes);
+    if (affectedRows !== 1) {
+      const erro = new Error(
+        "Não foi possível salvar essas anotações. Tente novamente ou entre em contato com o suporte.",
+      );
+      throw erro;
+    }
+
+    return {
+      mensagem: `Sua anotações foram salvas com sucesso.`
+    };
 }
 
 export async function serviceEditarStatusSolicitacaoAdocao(id, status) {

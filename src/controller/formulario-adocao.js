@@ -2,6 +2,7 @@ import {
   serviceSelecionarSolicitacoesAdocao,
   serviceSelecionarSolicitacaoAdocaoPorId,
   serviceInserirSolicitacaoAdocao,
+  serviceInserirAnotacoes,
   serviceEditarStatusSolicitacaoAdocao,
   serviceEditarEntrevistaSolicitacaoAdocao,
   serviceDeletarSolicitacaoAdocaoPorId,
@@ -60,6 +61,20 @@ export async function controllerInserirSolicitacaoAdocao(req, res, next) {
     } catch (err) {
         next(err)
     }
+}
+
+export async function controllerInserirAnotacoes(req, res, next) {
+  try {
+    const {id} = req.params
+
+    const anotacao = req.body.anotacoes.trim();
+
+    const inserir = await serviceInserirAnotacoes(id, anotacao);
+
+    res.status(201).json(inserir);
+  } catch(err) {
+    next(err);
+  }
 }
 
 export async function controllerEditarStatusSolicitacaoAdocao(req, res, next) {

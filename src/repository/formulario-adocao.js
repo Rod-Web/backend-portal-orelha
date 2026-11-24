@@ -120,14 +120,42 @@ export async function repositoryInserirSolicitacaoDeAdocao(dados) {
     }
 }
 
+export async function repositoryInserirAnotacoes(id, anotacoes) {
+    const [result] = await pool.execute(`UPDATE solicitacao_adocao SET infos_entrevista = ? WHERE id = ?`, [anotacoes, id])
+    return result.affectedRows
+};
+
 export async function repositoryEditarStatusSolicitacaoAdocao(id, status) {
     const [result] = await pool.execute(`UPDATE solicitacao_adocao SET status = ? WHERE id = ?`, [status, id]);
     return result.affectedRows
 }
 
-export async function repositoryEditarEntrevistaSolicitacaoAdocao(id, status) {
-    const [result] = await pool.execute(`UPDATE solicitacao_adocao SET entrevista = ? WHERE id = ?`, [status, id]);
-    return result.affectedRows
+export async function repositoryEditarEntrevistaSolicitacaoAdocao(id, entrevista) {
+    const conn = await pool.getConnection();
+    try {
+        await conn.beginTransaction();
+
+        const [result] = await conn.execute(`UPDATE solicitacao_adocao SET entrevista = ? WHERE id = ?`, [entrevista, id]);
+        if(result.affectedRows !== 1) {
+            await conn.rollback();
+            return 0;
+        };
+
+        const [resultInfos] = await conn.execute(`UPDATE solicitacao_adocao SET infos_entrevista = null WHERE id = ?`, [id]);
+        if(resultInfos.affectedRows !== 1) {
+            await conn.rollback();
+            return 0;
+        };
+
+        await conn.commit();
+        return result.affectedRows
+    } catch(err) {
+        await conn.rollback();
+        throw err;
+    } finally {
+        conn.release();
+    }
+
 }
 
 export async function repositoryDeletarSolicitacaoAdocaoPorId(id) {

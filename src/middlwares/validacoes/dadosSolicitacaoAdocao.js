@@ -116,3 +116,22 @@ export function validarEntrevista(req, res, next) {
 
   next();
 };
+
+export function validarAnotacoes(req, res, next) {
+    function validacao(anotacoes) {
+
+    if (anotacoes === undefined || anotacoes === "") return "O campo da anotacoes deve existir.";
+
+    if (typeof anotacoes !== "string") return "O campo da anotacoes precisa ser do type string.";
+
+    return null;
+  }
+
+  if (!req.body) return res.status(400).json({ erro: "O corpo da requisição não foi informado." });
+
+  const { anotacoes } = req.body;
+  const erro = validacao(anotacoes);
+  if (erro) return res.status(400).json({ erro });
+
+  next();
+}

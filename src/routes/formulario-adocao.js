@@ -1,12 +1,8 @@
 import express from 'express'
 
-import { dadosSolicitacaoAdocao } from "../middlwares/validacoes/dadosSolicitacaoAdocao.js";
-
-import { validarIdGeral } from "../middlwares/validacoes/dadosTrabalhoVoluntario.js";
+import { dadosSolicitacaoAdocao, validarIdGeral, validarEntrevista, validarAnotacoes } from "../middlwares/validacoes/dadosSolicitacaoAdocao.js";
 
 import { validarStatusForms } from "../middlwares/validacoes/dadosForms.js"
-
-import { validarEntrevista } from "../middlwares/validacoes/dadosSolicitacaoAdocao.js"
 
 
 import { validarAccessMiddlware } from "../middlwares/validacoes/dadosUsuario.js";
@@ -17,6 +13,7 @@ import {
   controllerSelecionarSolicitacoesAdocao,
   controllerSelecionarSolicitacaoAdocaoPorId,
   controllerInserirSolicitacaoAdocao,
+  controllerInserirAnotacoes,
   controllerEditarStatusSolicitacaoAdocao,
   controllerEditarEntrevistaSolicitacaoAdocao,
   controllerDeletarSolicitacaoAdocaoPorId,
@@ -47,6 +44,16 @@ route_formularioAdocao.post(
   dadosSolicitacaoAdocao,
   controllerInserirSolicitacaoAdocao,
 );
+
+route_formularioAdocao.post(
+  "/rotasprivadas/inserirAnotacoesEntrevista/:id",
+  validarAccessMiddlware,
+  autenticar,
+  confirmarPermissoesAdmin,
+  validarIdGeral,
+  validarAnotacoes,
+  controllerInserirAnotacoes
+)
 
 route_formularioAdocao.patch(
   "/rotasprivadas/editarStatusSolicitacao/:id",
